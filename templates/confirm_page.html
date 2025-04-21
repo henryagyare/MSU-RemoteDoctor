@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Confirmation - Patient Saved</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f9f9f9;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+    .modal {
+      background-color: white;
+      border: 2px solid #ccc;
+      border-radius: 12px;
+      padding: 40px 30px;
+      max-width: 400px;
+      text-align: center;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+    }
+    .modal .icon {
+      font-size: 60px;
+      color: #4CAF50;
+      margin-bottom: 20px;
+    }
+    .modal h2 {
+      margin: 0 0 10px;
+      color: #333;
+    }
+    .modal p {
+      margin: 0 0 30px;
+      color: #666;
+    }
+    .modal button {
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      padding: 12px 24px;
+      border-radius: 8px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+    .modal button:hover {
+      background-color: #388e3c;
+    }
+  </style>
+</head>
+<body>
+  <div class="modal">
+    <div class="icon">&#10004;</div>
+    <h2>Patient Saved</h2>
+    <p>The patient information has been successfully saved.</p>
+    <button onclick="window.location.href='/'">OK</button>
+  </div>
+</body>
+</html>

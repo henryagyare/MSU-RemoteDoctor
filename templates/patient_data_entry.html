@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Patient Data Entry</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 30px;
+      background-color: #f9f9f9;
+    }
+    h2 {
+      text-align: center;
+    }
+    form {
+      max-width: 800px;
+      margin: 0 auto;
+      background-color: white;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    .form-section {
+      margin-bottom: 20px;
+    }
+    .form-section h3 {
+      margin-bottom: 10px;
+    }
+    .form-group {
+      display: flex;
+      margin-bottom: 10px;
+      align-items: center;
+    }
+    .form-group label {
+      width: 200px;
+      margin-right: 10px;
+    }
+    .form-group input,
+    .form-group textarea,
+    .form-group select {
+      flex: 1;
+      padding: 5px;
+    }
+    .checkbox-group {
+      display: flex;
+      gap: 15px;
+      flex-wrap: wrap;
+      margin-bottom: 10px;
+    }
+    .button-group {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+    }
+    button {
+      padding: 10px 20px;
+      font-size: 16px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #ddd;
+    }
+  </style>
+</head>
+<body>
+  <h2>Patient Data Entry</h2>
+  <form>
+    <div class="form-section">
+      <div class="form-group">
+        <label for="name">Name:</label>
+        <input type="text" id="name">
+      </div>
+      <div class="form-group">
+        <label for="age">Age:</label>
+        <input type="number" id="age">
+        <label for="sex">Sex:</label>
+        <select id="sex">
+          <option>Male</option>
+          <option>Female</option>
+          <option>Other</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="arrival">Date & Time of Arrival:</label>
+        <input type="datetime-local" id="arrival">
+      </div>
+    </div>
+
+    <div class="form-section">
+      <h3>Vital Signs</h3>
+      <div class="form-group">
+        <label>Blood Pressure:</label>
+        <input type="text"> / <input type="text">
+        <label for="hr">Heart Rate:</label>
+        <input type="number" id="hr">
+      </div>
+      <div class="form-group">
+        <label for="rr">Respiratory Rate:</label>
+        <input type="number" id="rr">
+        <label for="temp">Temperature:</label>
+        <input type="number" id="temp">
+      </div>
+      <div class="form-group">
+        <label for="spo2">Oxygen Saturation:</label>
+        <input type="number" id="spo2">
+        <label for="glucose">Blood Glucose Level:</label>
+        <input type="number" id="glucose">
+      </div>
+    </div>
+
+    <div class="form-section">
+      <h3>Medical History</h3>
+      <div class="checkbox-group">
+        <label><input type="checkbox"> Hypertension</label>
+        <label><input type="checkbox"> Diabetes</label>
+        <label><input type="checkbox"> Atrial Fibrillation</label>
+        <label><input type="checkbox"> Current Medications</label>
+        <label><input type="checkbox"> Family History of Stroke</label>
+      </div>
+      <div class="form-group">
+        <label for="meds">Current Medications:</label>
+        <input type="text" id="meds">
+      </div>
+      <div class="form-group">
+        <label for="allergies">Allergies:</label>
+        <input type="text" id="allergies">
+      </div>
+      <div class="form-group">
+        <label for="stroke">Previous Stroke Events:</label>
+        <input type="text" id="stroke">
+        <label>Family History of Stroke:</label>
+        <input type="checkbox">
+      </div>
+    </div>
+
+    <div class="form-section">
+      <h3>Imaging</h3>
+      <div class="form-group">
+        <label for="ct">Upload CT Scan:</label>
+        <input type="file" id="ct">
+      </div>
+      <div class="form-group">
+        <label for="imagingTime">Imaging Date & Time:</label>
+        <input type="datetime-local" id="imagingTime">
+      </div>
+      <div class="form-group">
+        <label for="notes">Radiologist Notes:</label>
+        <textarea id="notes" rows="4"></textarea>
+      </div>
+    </div>
+
+    <div class="button-group">
+      <button type="button">Save Draft</button>
+      <button type="submit">Submit for Review</button>
+      <button type="reset">Reset Form</button>
+    </div>
+  </form>
+</body>
+</html>

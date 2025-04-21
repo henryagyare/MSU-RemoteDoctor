@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Technician Dashboard</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f4f4f4;
+    }
+    .container {
+      display: flex;
+      height: 100vh;
+    }
+    .sidebar {
+      width: 200px;
+      background-color: #e0e0e0;
+      padding: 20px;
+      box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+    }
+    .sidebar a {
+      display: block;
+      margin-bottom: 10px;
+      text-decoration: none;
+      color: black;
+      font-weight: bold;
+    }
+    .sidebar a.active {
+      background-color: #ccc;
+      padding: 5px;
+      border-radius: 5px;
+    }
+    .main-content {
+      flex: 1;
+      padding: 40px;
+      background-color: #fff;
+    }
+    .top-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .logout {
+      text-decoration: none;
+      color: #0d3f8f;
+      font-weight: bold;
+    }
+    h1 {
+      margin-bottom: 20px;
+    }
+    .button {
+      background-color: white;
+      border: 1px solid black;
+      padding: 10px 15px;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-bottom: 20px;
+      font-weight: bold;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+    table, th, td {
+      border: 1px solid #aaa;
+    }
+    th, td {
+      padding: 10px;
+      text-align: left;
+    }
+    th {
+      background-color: #ddd;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="sidebar">
+      <a href="#" class="active">Dashboard</a>
+      <a href="#">Patients</a>
+    </div>
+    <div class="main-content">
+      <div class="top-bar">
+        <h1>DASHBOARD – STROKE TECHNICIAN</h1>
+        <a href="#" class="logout">Log Out</a>
+      </div>
+      <form action='/patient_data_entry' method = 'GET'> 
+        <button  type='submit' class="button">+ New Patient</button>
+      </form> 
+
+      <h2>ACTIVE PATIENTS</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Patient ID</th>
+            <th>Name</th>
+            <th>Status</th>
+            <th>Date of Arrival</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>12345</td>
+            <td>Jane Doe</td>
+            <td>In Progress</td>
+            <td>04/01/2024</td>
+          </tr>
+          <tr>
+            <td>67890</td>
+            <td>John Smith</td>
+            <td>In Progress</td>
+            <td>04/01/2024</td>
+          </tr>
+          <tr>
+            <td>13579</td>
+            <td>Michael Brown</td>
+            <td>In Progress</td>
+            <td>03/31/2024</td>
+          </tr>
+          <tr>
+            <td>24680</td>
+            <td>Emily White</td>
+            <td>In Progress</td>
+            <td>03/30/2024</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</body>
+</html>
