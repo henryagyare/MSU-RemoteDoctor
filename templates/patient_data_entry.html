@@ -67,17 +67,17 @@
 </head>
 <body>
   <h2>Patient Data Entry</h2>
-  <form>
+  <form method="post" action="/confirm_page">
     <div class="form-section">
       <div class="form-group">
         <label for="name">Name:</label>
-        <input type="text" id="name">
+        <input type="text" id="name" name="fullname">
       </div>
       <div class="form-group">
         <label for="age">Age:</label>
-        <input type="number" id="age">
+        <input type="number" id="age" name="age">
         <label for="sex">Sex:</label>
-        <select id="sex">
+        <select id="sex" name="sex">  <!-- check for how select is sent to the backend -->
           <option>Male</option>
           <option>Female</option>
           <option>Other</option>
@@ -85,7 +85,7 @@
       </div>
       <div class="form-group">
         <label for="arrival">Date & Time of Arrival:</label>
-        <input type="datetime-local" id="arrival">
+        <input type="datetime-local" id="arrival" name="arrival">
       </div>
     </div>
 
@@ -93,27 +93,27 @@
       <h3>Vital Signs</h3>
       <div class="form-group">
         <label>Blood Pressure:</label>
-        <input type="text"> / <input type="text">
+        <input type="text" placeholder="systolic" name="systolic"> / <input type="diastolic" name="diastolic">
         <label for="hr">Heart Rate:</label>
-        <input type="number" id="hr">
+        <input type="number" id="heart-rate" name="heart-rate">
       </div>
       <div class="form-group">
         <label for="rr">Respiratory Rate:</label>
         <input type="number" id="rr">
         <label for="temp">Temperature:</label>
-        <input type="number" id="temp">
+        <input type="number" id="temp" name="temp">
       </div>
       <div class="form-group">
         <label for="spo2">Oxygen Saturation:</label>
         <input type="number" id="spo2">
         <label for="glucose">Blood Glucose Level:</label>
-        <input type="number" id="glucose">
+        <input type="number" id="glucose" name="glucose">
       </div>
     </div>
 
     <div class="form-section">
       <h3>Medical History</h3>
-      <div class="checkbox-group">
+      <div class="checkbox-group">  <!-- Check for how checkboxes are sent to the backend-->
         <label><input type="checkbox"> Hypertension</label>
         <label><input type="checkbox"> Diabetes</label>
         <label><input type="checkbox"> Atrial Fibrillation</label>
@@ -122,20 +122,21 @@
       </div>
       <div class="form-group">
         <label for="meds">Current Medications:</label>
-        <input type="text" id="meds">
+        <input type="text" id="meds" name="meds">
       </div>
       <div class="form-group">
         <label for="allergies">Allergies:</label>
-        <input type="text" id="allergies">
+        <input type="text" id="allergies" name="allergies">
       </div>
       <div class="form-group">
         <label for="stroke">Previous Stroke Events:</label>
-        <input type="text" id="stroke">
+        <input type="text" id="stroke" name = 'previous stroke event'>
         <label>Family History of Stroke:</label>
-        <input type="checkbox">
+        <input type="checkbox"> 
       </div>
     </div>
 
+    <!-- The imaging upload data will be handled differently -->
     <div class="form-section">
       <h3>Imaging</h3>
       <div class="form-group">
@@ -157,6 +158,7 @@
       <button type="submit">Submit for Review</button>
       <button type="reset">Reset Form</button>
     </div>
+
   </form>
 </body>
 </html>
