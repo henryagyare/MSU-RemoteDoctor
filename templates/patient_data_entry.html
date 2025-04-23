@@ -67,7 +67,7 @@
 </head>
 <body>
   <h2>Patient Data Entry</h2>
-  <form method="post" action="/confirm_page">
+  <form method="post" action="/confirm_page" enctype = 'multipart/form-data'>
     <div class="form-section">
       <div class="form-group">
         <label for="name">Name:</label>
@@ -77,7 +77,7 @@
         <label for="age">Age:</label>
         <input type="number" id="age" name="age">
         <label for="sex">Sex:</label>
-        <select id="sex" name="sex">  <!-- check for how select is sent to the backend -->
+        <select id="sex" name="sex">
           <option>Male</option>
           <option>Female</option>
           <option>Other</option>
@@ -93,8 +93,8 @@
       <h3>Vital Signs</h3>
       <div class="form-group">
         <label>Blood Pressure:</label>
-        <input type="text" placeholder="systolic" name="systolic"> / <input type="diastolic" name="diastolic">
-        <label for="hr">Heart Rate:</label>
+        <input type="text" placeholder="systolic" name="systolic"> / <input type="text" placeholder="diastolic" name="diastolic">
+        <label for="hr">Heart Rate (Bpm):</label>
         <input type="number" id="heart-rate" name="heart-rate">
       </div>
       <div class="form-group">
@@ -105,7 +105,7 @@
       </div>
       <div class="form-group">
         <label for="spo2">Oxygen Saturation:</label>
-        <input type="number" id="spo2">
+        <input type="number" id="spo2" name = 'oxygen-saturation'>
         <label for="glucose">Blood Glucose Level:</label>
         <input type="number" id="glucose" name="glucose">
       </div>
@@ -113,12 +113,12 @@
 
     <div class="form-section">
       <h3>Medical History</h3>
-      <div class="checkbox-group">  <!-- Check for how checkboxes are sent to the backend-->
-        <label><input type="checkbox"> Hypertension</label>
-        <label><input type="checkbox"> Diabetes</label>
-        <label><input type="checkbox"> Atrial Fibrillation</label>
-        <label><input type="checkbox"> Current Medications</label>
-        <label><input type="checkbox"> Family History of Stroke</label>
+      <div class="checkbox-group">
+        <label><input type="checkbox" name = 'medical-history' value = 'Hypertension'> Hypertension</label>
+        <label><input type="checkbox" name = 'medical-history' value= 'Diabetes'> Diabetes</label>
+        <label><input type="checkbox" name = 'medical-history' value ='Atrial-Fibrillation'> Atrial Fibrillation</label>
+        <label><input type="checkbox" name = 'medical-history' value ='Current-Medications'> Current Medications</label>
+        <label><input type="checkbox" name = 'medical-history' value = 'Family-History-of-stroke '> Family History of Stroke</label>
       </div>
       <div class="form-group">
         <label for="meds">Current Medications:</label>
@@ -130,9 +130,7 @@
       </div>
       <div class="form-group">
         <label for="stroke">Previous Stroke Events:</label>
-        <input type="text" id="stroke" name = 'previous stroke event'>
-        <label>Family History of Stroke:</label>
-        <input type="checkbox"> 
+        <input type="text" id="stroke" name = 'previous-stroke-event'>
       </div>
     </div>
 
@@ -141,15 +139,15 @@
       <h3>Imaging</h3>
       <div class="form-group">
         <label for="ct">Upload CT Scan:</label>
-        <input type="file" id="ct">
+        <input type="file" id="ct" name = 'CT-scan'>
       </div>
       <div class="form-group">
         <label for="imagingTime">Imaging Date & Time:</label>
-        <input type="datetime-local" id="imagingTime">
+        <input type="datetime-local" id="imagingTime" name="imaging-date-time">
       </div>
       <div class="form-group">
         <label for="notes">Radiologist Notes:</label>
-        <textarea id="notes" rows="4"></textarea>
+        <textarea id="notes" rows="4" name="radiologist-notes"></textarea>
       </div>
     </div>
 
