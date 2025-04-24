@@ -13,14 +13,41 @@ app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
 def home():
     return redirect(url_for("login"))
 
-@app.route("/login", methods=["POST", "GET"])
+#created a dummy 2d-dictionary of technician and neurologist login information. Data will be later from data base
+users = {
+        'HenryAsante' : {'password' : 'nurse1223', 'role': 'technician'},
+        'ChrisGadze' : {'password' : 'neuro2234', 'role' : 'neurologist'}
+        }
+
+@app.route("/login", methods=["GET", "POST"])
 def login():
     if request.method == "GET":
-        return render_template("login.html")
-    elif request.method == "POST":
-        return redirect(url_for("technician_dashboard"))
-        pass # verify user data and proceded
-    
+        return render_template("login.html")  # show form on GET
+
+    if request.method == 'POST':
+        username = request.form.get('username')
+        password = request.form.get('password')
+        role = request.form.get('role').lower()  # normalize role
+
+        # Dummy users dictionary for demonstration. Users credentials will be later sourced from the database
+        users = {
+            'HenryAsante': {'password': 'nurse1234', 'role': 'technician'},
+            'ChrisGadze': {'password': 'neuro2234', 'role': 'neurologist'}
+        }
+
+        user = users.get(username)
+
+
+        if user and user['password'] == password and user['role'] == role:
+            if role == 'technician':
+                return redirect(url_for('technician_dashboard'))
+            elif role == 'neurologist':
+                return redirect(url_for('neurologist_dashboard'))
+            else:
+                return "Role not recognized."
+        else:
+            return "Invalid Credentials or Role Mismatch!"
+
 
 @app.route('/technician_dashboard', methods=["POST", "GET"])
 def technician_dashboard():
@@ -90,6 +117,10 @@ def search_patients():
     search_item = request.form["search_patients"]
     return f"You searched for {search_item}"
 
+
+@app.route('/nhiss_score')
+def nhiss_score():
+    return render_template('nhiss_score.html')
 
 if __name__ == "__main__":
     app.run(debug=True)

@@ -58,7 +58,8 @@
 <body>
   <div class="login-container">
     <h2>Login</h2>
-    <form>
+    
+    <form method = 'POST' action = '/login'>
       <div class="form-group">
         <label for="username">Username:</label>
         <input type="text" id="username" name="username" required>
@@ -67,6 +68,7 @@
         <label for="password">Password:</label>
         <input type="password" id="password" name="password" required>
       </div>
+
       <div class="form-group">
         <label for="role">Role:</label>
         <select id="role" name="role" required>
@@ -77,6 +79,7 @@
       </div>
       <button type="submit">Log In</button>
     </form>
+ 
   </div>
 </body>
 </html>

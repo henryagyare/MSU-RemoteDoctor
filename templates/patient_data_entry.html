@@ -67,6 +67,7 @@
 </head>
 <body>
   <h2>Patient Data Entry</h2>
+
   <form method="post" action="/confirm_page" enctype = 'multipart/form-data'>
     <div class="form-section">
       <div class="form-group">
@@ -150,6 +151,12 @@
         <textarea id="notes" rows="4" name="radiologist-notes"></textarea>
       </div>
     </div>
+    <div class="button-group">
+        
+        <form action = '/patient_data_entry' name = 'nhiss_score' >
+          <a href = '/nhiss_score'> <button type= 'button' = >Calculate Patient's NHISS Score</button></a>
+          <form>
+      </div>
 
     <div class="button-group">
       <button type="button">Save Draft</button>
