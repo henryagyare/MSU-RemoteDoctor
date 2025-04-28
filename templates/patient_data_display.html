@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Patient Details</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f4f6f8;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            min-height: 100vh;
+        }
+
+        .container {
+            background: #ffffff;
+            margin-top: 50px;
+            padding: 30px 40px;
+            border-radius: 12px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+            width: 90%;
+            max-width: 700px;
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #2c3e50;
+        }
+
+        .detail-group {
+            margin-bottom: 20px;
+        }
+
+        .detail-group label {
+            font-weight: 600;
+            color: #34495e;
+            display: block;
+            margin-bottom: 5px;
+            font-size: 16px;
+        }
+
+        .detail-group p {
+            background: #ecf0f1;
+            padding: 12px;
+            border-radius: 8px;
+            font-size: 15px;
+            color: #555;
+        }
+
+        .btn-back {
+            display: inline-block;
+            margin-top: 30px;
+            padding: 12px 20px;
+            background-color: #3498db;
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            text-align: center;
+            font-weight: 600;
+        }
+
+        .btn-back:hover {
+            background-color: #2980b9;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Patient Information Summary</h2>
+
+    <div class="detail-group">
+        <label>Full Name</label>
+        <p>{{ fullname }}</p>
+    </div>
+
+    <div class="detail-group">
+        <label>Age</label>
+        <p>{{ age }}</p>
+    </div>
+
+    <div class="detail-group">
+        <label>Sex</label>
+        <p>{{ sex }}</p>
+    </div>
+
+    <div class="detail-group">
+        <label>Time of Arrival</label>
+        <p>{{ arrival }}</p>
+    </div>
+
+    <div class="detail-group">
+        <label>Systolic Blood Pressure</label>
+        <p>{{ systolic }}</p>
+    </div>
+
+    <div class="detail-group">
+        <label>Diastolic Blood Pressure</label>
+        <p>{{ diastolic }}</p>
+    </div>
+
+    <div class="detail-group">
+        <label>Heart Rate</label>
+        <p>{{ heart_rate }}</p>
+    </div>
+
+    <div class="detail-group">
+        <label>Temperature</label>
+        <p>{{ temperature }}</p>
+    </div>
+
+    <div class="detail-group">
+        <label>Oxygen Saturation</label>
+        <p>{{ oxygen_saturation }}</p>
+    </div>
+
+    <div class="detail-group">
+        <label>Blood Glucose Level</label>
+        <p>{{ glucose }}</p>
+    </div>
+
+    <div class="detail-group">
+        <label>Current Medications</label>
+        <p>{{ current_medications }}</p>
+    </div>
+
+    <div class="detail-group">
+        <label>Allergies</label>
+        <p>{{ allergies }}</p>
+    </div>
+
+    <div class="detail-group">
+        <label>History of Stroke</label>
+        <p>{{ stroke_history }}</p>
+    </div>
+
+    <div class="detail-group">
+        <label>Medical History</label>
+        <p>{{ medical_history }}</p>
+    </div>
+
+    <div class="detail-group">
+        <label>Radiologist Notes</label>
+        <p>{{ radiologist_notes }}</p>
+    </div>
+
+    <div class="detail-group">
+        <label>NIHSS Score</label>
+        <p>{{ nhiss_score }}</p>
+    </div>
+
+    <a href="/" class="btn-back">Back to Home</a>
+</div>
+
+</body>
+</html>
