@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Reports Dashboard</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f4f4f4;
+    }
+    .container {
+      display: flex;
+    }
+    .sidebar {
+      width: 220px;
+      background-color: #dddddd;
+      padding: 20px;
+      min-height: 100vh;
+    }
+    .sidebar a {
+      display: block;
+      padding: 10px 0;
+      font-weight: bold;
+      color: #000;
+      text-decoration: none;
+    }
+    .main {
+      flex: 1;
+      padding: 30px;
+      background-color: #fff;
+    }
+    h1 {
+      margin-top: 0;
+    }
+    .section {
+      margin-bottom: 30px;
+    }
+    .overview-container {
+      display: flex;
+      gap: 20px;
+    }
+    .chart-box, .stats-box {
+      background-color: #fafafa;
+      padding: 20px;
+      flex: 1;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+    .chart-placeholder {
+      height: 180px;
+      background: repeating-linear-gradient(45deg, #f0f0f0, #f0f0f0 10px, #e0e0e0 10px, #e0e0e0 20px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #999;
+      font-style: italic;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    th, td {
+      border: 1px solid #ccc;
+      padding: 10px;
+      text-align: left;
+    }
+    th {
+      background-color: #f1f1f1;
+    }
+    .export-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 20px;
+    }
+    .export-container textarea {
+      flex: 1;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      margin-right: 20px;
+    }
+    .export-btn {
+      background-color: #007bff;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .export-btn:hover {
+      background-color: #0056b3;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="sidebar">
+      <a href="/neurologist_dashboard">Dashboard</a>
+      <a href="#">Cases</a>
+      <a href="#">Reports</a>
+    </div>
+    <div class="main">
+      <h1>REPORTS</h1>
+
+      <div class="section overview-container">
+        <div class="chart-box">
+          <h3>OVERVIEW</h3>
+          <div class="chart-placeholder">[Chart Visualization]</div>
+        </div>
+        <div class="stats-box">
+          <h3>STATISTICS</h3>
+          <p>• Total Patients: 125</p>
+          <p>• Avg Treatment Time: 32 mins</p>
+          <p>• Discharges: 68%</p>
+        </div>
+      </div>
+
+      <div class="section">
+        <h3>TRENDS</h3>
+        <table>
+          <thead>
+            <tr>
+              <th>Patient</th>
+              <th>Measure</th>
+              <th>Change</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>Jane Doe</td><td>BP</td><td>-10 mmHg</td></tr>
+            <tr><td>John Smith</td><td>HR</td><td>-5 bpm</td></tr>
+            <tr><td>Emily White</td><td>O2 Sat</td><td>+3%</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="export-container">
+        <textarea placeholder="Summary or additional notes..."></textarea>
+        <button class="export-btn">Export</button>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
