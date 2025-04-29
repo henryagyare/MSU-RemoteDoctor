@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for, jasonify 
+from flask import Flask, render_template, request, redirect, url_for, jsonify 
 # from . import Users
 from werkzeug.utils import secure_filename
 from flask_sqlalchemy import SQLAlchemy 
@@ -29,9 +29,9 @@ class UserAccount(db.Model):
 # Patients Class
 class Patient(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String(100))
-    password = db.Column(db.String(300))
-    role = db.Column(db.String(300))
+    # username = db.Column(db.String(100))
+    # password = db.Column(db.String(300))
+    # role = db.Column(db.String(300))
     fullname = db.Column(db.String(300))
     age = db.Column(db.Integer)
     sex = db.Column(db.String(300))
@@ -48,7 +48,7 @@ class Patient(db.Model):
     medical_history = db.Column(db.String(500))
     radiologist_notes =db.Column(db.String(500))
     nhiss_score = db.Column(db.Integer)
-    neuro_approved = db.Column(db.Integer)
+    # neuro_approved = db.Column(db.Integer)
 
 with app.app_context():
     db.create_all()
@@ -146,7 +146,7 @@ def nhiss_score():
                           systolic = systolic, diastolic = diastolic, heart_rate = heart_rate, 
                           temperature = temperature, oxygen_saturation = oxygen_saturation, glucose = glucose,
                           current_medications = current_medications, allergies = allergies,stroke_history =stroke_history, 
-                          medical_history = medical_history, radiologist_notes = radiologist_notes, nhiss_score = nhiss_score_calculated)
+                          medical_history = medical_history, radiologist_notes = radiologist_notes)
         db.session.add(new_patient)       
         db.session.commit() 
 
@@ -176,33 +176,40 @@ def confirm_page():
         nhiss_score_calculated = request.form["nhiss_score"]
         return render_template("confirm_page.html")
 
-@app.route("/search_patients", methods=["POST"])
-def search_patients():
-    result = []
+@app.route('/api/search_patients', methods=['GET'])
+def api_search_patients():
+    name = request.args.get('name', '').strip()
+    arrival = request.args.get('arrival', '').strip()
 
-    if request.method == 'POST':
-        name = request.form.get('name', '').strip()
-        patient_id = request.form.get('patient_id', '').strip()
+    query = Patient.query
 
-        query = Patient.query 
+    if name:
+        query = query.filter(Patient.fullname.ilike(f'%{name}%'))
+    if arrival:
+        try:
+            from datetime import datetime
+            arrival_date = datetime.strptime(arrival, '%Y-%m-%d').date()
+            query = query.filter(db.func.date(Patient.arrival) == arrival_date)
+        except:
+            pass  # Ignore bad date input
 
-        if name:
-             query = query.filter(Patient.fullname.ilike(f'%{name}%'))
-        if patient_id:
-            query = query.filter(Patient.id == patient_id)
+    searched_patient = query.order_by(Patient.arrival.desc()).first()
 
-        if not name and not patient_Id:
-            query = query.order_by(Patient.arrival.desc()).limit(8)
+    top_patients = Patient.query.order_by(Patient.arrival.desc()).limit(10).all()
 
-        results = query.order_by(Patient.arrival.desc()).limit(8).all()
-
-        return jsonify([
-        {
+    def serialize(p):
+        return {
             'id': p.id,
             'fullname': p.fullname,
-            'arrival': p.arrival.strftime('%Y-%m-%d %H:%M')
-        } for p in results
-        ])
+            # 'status': p.status,
+            'arrival': p.arrival.strftime('%Y-%m-%d')
+        }
+
+    return {
+        'searched': serialize(searched_patient) if searched_patient else None,
+        'top_patients': [serialize(p) for p in top_patients]
+    }
+
 
 @app.route('/patient_data_display')
 def patient_data_display():

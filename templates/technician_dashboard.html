@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Technician Dashboard</title>
   <style>
     body {
@@ -19,7 +19,6 @@
       width: 200px;
       background-color: #e0e0e0;
       padding: 20px;
-      box-shadow: 2px 0 5px rgba(0,0,0,0.1);
     }
     .sidebar a {
       display: block;
@@ -47,9 +46,6 @@
       text-decoration: none;
       color: #0d3f8f;
       font-weight: bold;
-    }
-    h1 {
-      margin-bottom: 20px;
     }
     .button {
       background-color: white;
@@ -88,51 +84,64 @@
         <h1>DASHBOARD – STROKE TECHNICIAN</h1>
         <a href="#" class="logout">Log Out</a>
       </div>
-      <form action='/patient_data_entry' method = 'GET'> 
-        <button  type='submit' class="button">+ New Patient</button>
-      </form> 
-      <form action="/technician_dashboard" method="POST">
-        <input type="search" name="search_patients">
-        <input type="submit">
+      <form action="/patient_data_entry" method="GET"> 
+        <button type="submit" class="button">+ New Patient</button>
       </form>
 
-      <h2>ACTIVE PATIENTS</h2>
-      <table>
-        <thead>
-          <tr>
-            <th>Patient ID</th>
-            <th>Name</th>
-            <th>Status</th>
-            <th>Date of Arrival</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>12345</td>
-            <td>Jane Doe</td>
-            <td>In Progress</td>
-            <td>04/01/2024</td>
-          </tr>
-          <tr>
-            <td>67890</td>
-            <td>John Smith</td>
-            <td>In Progress</td>
-            <td>04/01/2024</td>
-          </tr>
-          <tr>
-            <td>13579</td>
-            <td>Michael Brown</td>
-            <td>In Progress</td>
-            <td>03/31/2024</td>
-          </tr>
-          <tr>
-            <td>24680</td>
-            <td>Emily White</td>
-            <td>In Progress</td>
-            <td>03/30/2024</td>
-          </tr>
-        </tbody>
-      </table>
+      <!-- SEARCH BAR -->
+<input type="text" id="searchName" placeholder="Search by name" />
+<input type="date" id="searchDate" placeholder="Search by arrival date" />
+
+<h2>ACTIVE PATIENTS</h2>
+<table>
+  <thead>
+    <tr>
+      <!-- <th>Patient ID</th> -->
+      <th>Name</th>
+      <th>Date of Arrival</th>
+      <th>Status</th>
+
+    </tr>
+  </thead>
+  <tbody id="patientBody">
+    <!-- Filled by JS -->
+  </tbody>
+</table>
+
+<script>
+  function fetchAndRenderPatients() {
+    const name = document.getElementById('searchName').value;
+    const date = document.getElementById('searchDate').value;
+    const url = `/api/search_patients?name=${encodeURIComponent(name)}&arrival=${encodeURIComponent(date)}`;
+
+    fetch(url)
+      .then(res => res.json())
+      .then(data => {
+        const tbody = document.getElementById('patientBody');
+        tbody.innerHTML = '';
+
+        if (data.searched) {
+          const row = document.createElement('tr');
+          row.innerHTML = `<td>${data.searched.id}</td><td>${data.searched.fullname}</td><td>${data.searched.status}</td><td>${data.searched.arrival}</td>`;
+          row.style.backgroundColor = "#e0ffe0";
+          tbody.appendChild(row);
+        }
+
+        data.top_patients.forEach(p => {
+          if (!data.searched || p.id !== data.searched.id) {
+            const row = document.createElement('tr');
+            row.innerHTML = `<td>${p.id}</td><td>${p.fullname}</td><td>${p.status}</td><td>${p.arrival}</td>`;
+            tbody.appendChild(row);
+          }
+        });
+      });
+  }
+
+  document.getElementById('searchName').addEventListener('input', fetchAndRenderPatients);
+  document.getElementById('searchDate').addEventListener('input', fetchAndRenderPatients);
+  window.onload = fetchAndRenderPatients;
+  window.addEventListener('focus', fetchAndRenderPatients);
+</script>
     </div>
   </div>
 </body>
