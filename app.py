@@ -8,16 +8,23 @@ app = Flask(__name__)
 UPLOAD_FOLDER = "static/uploads"
 app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
 
+patient_data_list = [        
+        {"id": 1, "fullname": "John Doe", "age": 45, "arrival": "10:30 AM", "heart_rate": 78, "status": "Stable"},
+        {"id": 2, "fullname": "Jane Smith", "age": 52, "arrival": "11:15 AM", "heart_rate": 92, "status": "Critical"},
+        {"id": 3, "fullname": "Samuel Green", "age": 36, "arrival": "9:50 AM", "heart_rate": 85, "status": "Stable"},
+]
+patient_data = {}
 
 @app.route("/")
 def home():
     return redirect(url_for("login"))
 
-#created a dummy 2d-dictionary of technician and neurologist login information. Data will be later from data base
+# Dummy users dictionary for demonstration. Users credentials will be later sourced from the database
 users = {
-        'HenryAsante' : {'password' : 'nurse1223', 'role': 'technician'},
-        'ChrisGadze' : {'password' : 'neuro2234', 'role' : 'neurologist'}
-        }
+    'HenryAsante': {'password': 'nurse1234', 'role': 'technician'},
+    'ChrisGadze': {'password': 'neuro2234', 'role': 'neurologist'},
+    'JosephAuthur': {'password': 'patient2345', 'role': 'patient'}
+}
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
@@ -29,12 +36,6 @@ def login():
         password = request.form.get('password')
         role = request.form.get('role').lower()  # normalize role
 
-        # Dummy users dictionary for demonstration. Users credentials will be later sourced from the database
-        users = {
-            'HenryAsante': {'password': 'nurse1234', 'role': 'technician'},
-            'ChrisGadze': {'password': 'neuro2234', 'role': 'neurologist'}
-        }
-
         user = users.get(username)
 
 
@@ -43,6 +44,9 @@ def login():
                 return redirect(url_for('technician_dashboard'))
             elif role == 'neurologist':
                 return redirect(url_for('neurologist_dashboard'))
+            elif role == 'patient':
+                return redirect(url_for('patient_data_display'))
+           
             else:
                 return "Role not recognized."
         else:
@@ -60,15 +64,36 @@ def technician_dashboard():
 @app.route('/neurologist_dashboard')
 def neurologist_dashboard():
     return render_template('neurologist_dashboard.html')
-
-@app.route("/neurologist")
-def neurologist():
-    pass
     
 @app.route('/patient_data_entry')
 def patient_data_entry():
-
     return render_template("patient_data_entry.html")
+
+@app.route('/nhiss_score', methods = ["POST"])
+def nhiss_score():
+    # Patient Data from the Entry Form
+    if request.method == "POST":            
+        patient_data["fullname"] = request.form["fullname"]
+        patient_data["age"] = request.form["age"]
+        patient_data["sex"] =  request.form.get("sex")
+        patient_data["arrival"] = request.form["arrival"]
+        patient_data["systolic"] = request.form["systolic"]
+        patient_data["diastolic"] = request.form["diastolic"]
+        patient_data["heart_rate"] = request.form["heart-rate"]
+        patient_data["temperature"] = request.form["temp"]    
+        patient_data["oxygen_saturation"] = request.form["oxygen-saturation"]
+        patient_data["glucose"] = request.form["glucose"]
+        patient_data["current_medications"] = request.form["meds"]
+        patient_data["allergies"] = request.form["allergies"]
+        patient_data["stroke_history"] = request.form["previous-stroke-event"]
+        patient_data["medical_history"] = request.form.getlist("medical-history")
+        patient_data["radiologist_notes"] = request.form["radiologist-notes"]
+
+        patient_data_list.append(patient_data)
+
+        upload()
+
+    return render_template("nhiss_score.html")
 
 @app.route('/patient_case_review')
 def patient_case_review():
@@ -89,27 +114,8 @@ def upload():
 
 @app.route('/confirm_page', methods=["POST"])
 def confirm_page():
-    # Patient Data from the Entry Form
-    fullname = request.form["fullname"]
-    age = request.form["age"]
-    sex =  request.form.get("sex")
-    arrival = request.form["arrival"]
-    systolic = request.form["systolic"]
-    diastolic = request.form["diastolic"]
-    heart_rate = request.form["heart-rate"]
-    temperature = request.form["temp"]    
-    oxygen_saturation = request.form["oxygen-saturation"]
-    glucose = request.form["glucose"]
-    current_medications = request.form["meds"]
-    allergies = request.form["allergies"]
-    stroke_history = request.form["previous-stroke-event"]
-    medical_history = request.form.getlist("medical-history")
-    radiologist_notes = request.form["radiologist-notes"]
-
-    upload()
-
     if request.method == 'POST':
-        # return f"Fullname: {fullname},\t Age: {age}"
+        nhiss_score = request.form["nhiss_score"]
         return render_template("confirm_page.html")
 
 @app.route("/search_patients", methods=["POST"])
@@ -117,10 +123,18 @@ def search_patients():
     search_item = request.form["search_patients"]
     return f"You searched for {search_item}"
 
+@app.route('/patient_data_display')
+def patient_data_display():
+     return render_template('patient_data_display.html', **patient_data)
 
-@app.route('/nhiss_score')
-def nhiss_score():
-    return render_template('nhiss_score.html')
+@app.route('/patient_list')
+def patient_list():
+    patients = patient_data_list
+    print("Patients: ", patients)
+    return render_template('patient_list.html', patients=patients)
+    # return patients
+
 
 if __name__ == "__main__":
     app.run(debug=True)
+
