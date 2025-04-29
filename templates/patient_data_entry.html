@@ -72,13 +72,14 @@
       <div class="form-section">
         <div class="form-group">
           <label for="name">Name:</label>
-          <input type="text" id="name" name="fullname" />
+          <input type="text" id="name" name="fullname" required />
         </div>
         <div class="form-group">
           <label for="age">Age:</label>
-          <input type="number" id="age" name="age" />
+          <input type="number" id="age" name="age" required />
           <label for="sex">Sex:</label>
-          <select id="sex" name="sex">
+          <select id="sex" name="sex" required >
+            <option value="">Select Sex</option>
             <option>Male</option>
             <option>Female</option>
             <option>Other</option>
@@ -86,7 +87,7 @@
         </div>
         <div class="form-group">
           <label for="arrival">Date & Time of Arrival:</label>
-          <input type="datetime-local" id="arrival" name="arrival" />
+          <input type="datetime-local" id="arrival" name="arrival" required />
         </div>
       </div>
 
@@ -94,22 +95,22 @@
         <h3>Vital Signs</h3>
         <div class="form-group">
           <label>Blood Pressure:</label>
-          <input type="text" placeholder="systolic" name="systolic" /> /
-          <input type="text" placeholder="diastolic" name="diastolic" />
+          <input type="text" placeholder="systolic" name="systolic" required /> 
+          <input type="text" placeholder="diastolic" name="diastolic" required />
           <label for="hr">Heart Rate (Bpm):</label>
-          <input type="number" id="heart-rate" name="heart-rate" />
+          <input type="number" id="heart-rate" name="heart-rate" required />
         </div>
         <div class="form-group">
           <label for="rr">Respiratory Rate:</label>
-          <input type="number" id="rr" />
+          <input type="number" id="rr" required />
           <label for="temp">Temperature:</label>
-          <input type="number" id="temp" name="temp" />
+          <input type="number" id="temp" name="temp" required />
         </div>
         <div class="form-group">
           <label for="spo2">Oxygen Saturation:</label>
-          <input type="number" id="spo2" name="oxygen-saturation" />
+          <input type="number" id="spo2" name="oxygen-saturation" required />
           <label for="glucose">Blood Glucose Level:</label>
-          <input type="number" id="glucose" name="glucose" />
+          <input type="number" id="glucose" name="glucose"/>
         </div>
       </div>
 
