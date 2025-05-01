@@ -1,5 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for, jasonify 
-# from . import Users
+from flask import Flask, render_template, request, redirect, url_for, jsonify 
 from werkzeug.utils import secure_filename
 from flask_sqlalchemy import SQLAlchemy 
 import os
@@ -29,9 +28,6 @@ class UserAccount(db.Model):
 # Patients Class
 class Patient(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String(100))
-    password = db.Column(db.String(300))
-    role = db.Column(db.String(300))
     fullname = db.Column(db.String(300))
     age = db.Column(db.Integer)
     sex = db.Column(db.String(300))
@@ -47,8 +43,8 @@ class Patient(db.Model):
     stroke_history = db.Column(db.String(500))
     medical_history = db.Column(db.String(500))
     radiologist_notes =db.Column(db.String(500))
-    nhiss_score = db.Column(db.Integer)
-    neuro_approved = db.Column(db.Integer)
+    # nhiss_score = db.Column(db.Integer)
+    # neuro_approved = db.Column(db.Integer)
 
 with app.app_context():
     db.create_all()
@@ -146,7 +142,7 @@ def nhiss_score():
                           systolic = systolic, diastolic = diastolic, heart_rate = heart_rate, 
                           temperature = temperature, oxygen_saturation = oxygen_saturation, glucose = glucose,
                           current_medications = current_medications, allergies = allergies,stroke_history =stroke_history, 
-                          medical_history = medical_history, radiologist_notes = radiologist_notes, nhiss_score = nhiss_score_calculated)
+                          medical_history = medical_history, radiologist_notes = radiologist_notes)
         db.session.add(new_patient)       
         db.session.commit() 
 
@@ -191,7 +187,7 @@ def search_patients():
         if patient_id:
             query = query.filter(Patient.id == patient_id)
 
-        if not name and not patient_Id:
+        if not name and not patient_id:
             query = query.order_by(Patient.arrival.desc()).limit(8)
 
         results = query.order_by(Patient.arrival.desc()).limit(8).all()
@@ -227,7 +223,7 @@ def create_account():
         db.session.add(new_user)
         db.session.commit()
         return "Account request submitted. Approval may take 1–3 business days."
-    return render_template_string(form_template)
+    return render_template("create_account.html")
 
 
 if __name__ == "__main__":
