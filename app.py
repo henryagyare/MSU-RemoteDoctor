@@ -207,7 +207,18 @@ def patient_case_review():
 
 @app.route('/patients_report')
 def patients_report():
-    return render_template("patients_report.html")
+    patients = Patient.query.with_entities(Patient.age, Patient.nhiss_score).filter(
+        Patient.nhiss_score.isnot(None), Patient.age.isnot(None)
+    ).all()
+
+  
+    patient_data = [{"x": p.age, "y": p.nhiss_score} for p in patients]
+    return render_template("patients_report.html",
+                           total_patients=len(patients),
+                           avg_time=32,  
+                           discharges=68,  
+                           patient_data=patient_data)
+
 
 def upload():
     image = request.files['CT-scan']
