@@ -43,7 +43,7 @@ class Patient(db.Model):
     stroke_history = db.Column(db.String(500))
     medical_history = db.Column(db.String(500))
     radiologist_notes =db.Column(db.String(500))
-    # nhiss_score = db.Column(db.Integer)
+    nhiss_score = db.Column(db.Integer)
     # neuro_approved = db.Column(db.Integer)
 
 with app.app_context():
