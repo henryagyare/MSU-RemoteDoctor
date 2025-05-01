@@ -5,15 +5,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Reports Dashboard</title>
   <style>
-    * {
-      box-sizing: border-box;
-    }
+    * { box-sizing: border-box; }
 
     body {
       margin: 0;
       font-family: 'Segoe UI', sans-serif;
-      background-color: #f7f9fc; /* Softer light gray background */
-      color: #2c3e50; /* Darker text color for readability */
+      background-color: #f7f9fc;
+      color: #2c3e50;
     }
 
     .container {
@@ -22,7 +20,7 @@
 
     .sidebar {
       width: 220px;
-      background-color: #34495e; /* Muted dark blue */
+      background-color: #34495e;
       padding: 20px;
       min-height: 100vh;
       box-shadow: 2px 0 8px rgba(0, 0, 0, 0.1);
@@ -32,7 +30,7 @@
       display: block;
       padding: 10px 15px;
       font-weight: bold;
-      color: #ecf0f1; /* Light text color */
+      color: #ecf0f1;
       text-decoration: none;
       border-radius: 5px;
       transition: background-color 0.3s ease;
@@ -40,14 +38,14 @@
 
     .sidebar a:hover,
     .sidebar a.active {
-      background-color: #4ca1af; /* Highlighted link color */
+      background-color: #4ca1af;
       color: #fff;
     }
 
     .main {
       flex: 1;
       padding: 30px;
-      background-color: #ffffff; /* White background for the main content */
+      background-color: #ffffff;
       border-radius: 8px;
       box-shadow: 0 1px 5px rgba(0, 0, 0, 0.1);
       margin: 20px;
@@ -55,7 +53,7 @@
 
     h1 {
       margin-top: 0;
-      color: #34495e; /* Darker heading color */
+      color: #34495e;
     }
 
     .section {
@@ -67,9 +65,8 @@
       gap: 20px;
     }
 
-    .chart-box,
-    .stats-box {
-      background-color: #f8f9fa; /* Light gray background for boxes */
+    .chart-box, .stats-box {
+      background-color: #f8f9fa;
       padding: 20px;
       flex: 1;
       border-radius: 8px;
@@ -88,7 +85,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      color: #7f8c8d; /* Softer placeholder text color */
+      color: #7f8c8d;
       font-style: italic;
       border-radius: 5px;
     }
@@ -102,21 +99,20 @@
       box-shadow: 0 1px 5px rgba(0, 0, 0, 0.1);
     }
 
-    th,
-    td {
+    th, td {
       border: 1px solid #ddd;
       padding: 10px;
       text-align: left;
     }
 
     th {
-      background-color: #4ca1af; /* Muted blue for table headers */
+      background-color: #4ca1af;
       color: white;
       font-weight: bold;
     }
 
     tr:nth-child(even) {
-      background-color: #f8f9fa; /* Light gray for alternating rows */
+      background-color: #f8f9fa;
     }
 
     .export-container {
@@ -132,19 +128,18 @@
       border: 1px solid #ccc;
       border-radius: 8px;
       margin-right: 20px;
-      background-color: #f8f9fa; /* Light gray background */
+      background-color: #f8f9fa;
       color: #2c3e50;
-      font-family: 'Segoe UI', sans-serif; /* Default font for textarea */
+      font-family: 'Segoe UI', sans-serif;
     }
 
     .export-container textarea::placeholder {
-      font-family: 'Arial', sans-serif; /* Custom font for placeholder */
       font-style: italic;
-      color: #7f8c8d; /* Softer placeholder color */
+      color: #7f8c8d;
     }
 
     .export-btn {
-      background-color: #4ca1af; /* Muted blue button */
+      background-color: #4ca1af;
       color: white;
       border: none;
       padding: 10px 20px;
@@ -155,7 +150,7 @@
     }
 
     .export-btn:hover {
-      background-color: #0056b3; /* Darker blue on hover */
+      background-color: #0056b3;
     }
   </style>
 </head>
@@ -164,8 +159,9 @@
     <div class="sidebar">
       <a href="/neurologist_dashboard">Dashboard</a>
       <a href="#">Cases</a>
-      <a href="#">Reports</a>
+      <a href="#" class="active">Reports</a>
     </div>
+
     <div class="main">
       <h1>REPORTS</h1>
 
@@ -176,9 +172,9 @@
         </div>
         <div class="stats-box">
           <h3>STATISTICS</h3>
-          <p>• Total Patients: 125</p>
-          <p>• Avg Treatment Time: 32 mins</p>
-          <p>• Discharges: 68%</p>
+          <p>• Total Patients: <strong>125</strong></p>
+          <p>• Avg Treatment Time: <strong>32 mins</strong></p>
+          <p>• Discharges: <strong>68%</strong></p>
         </div>
       </div>
 
@@ -193,15 +189,15 @@
             </tr>
           </thead>
           <tbody>
-            <tr><td>Jane Doe</td><td>BP</td><td>-10 mmHg</td></tr>
-            <tr><td>John Smith</td><td>HR</td><td>-5 bpm</td></tr>
-            <tr><td>Emily White</td><td>O2 Sat</td><td>+3%</td></tr>
+            <tr><td>Jane Doe</td><td>Blood Pressure</td><td>-10 mmHg</td></tr>
+            <tr><td>John Smith</td><td>Heart Rate</td><td>-5 bpm</td></tr>
+            <tr><td>Emily White</td><td>Oxygen Saturation</td><td>+3%</td></tr>
           </tbody>
         </table>
       </div>
 
       <div class="export-container">
-        <textarea placeholder="Summary or additional notes..."></textarea>
+        <textarea rows="4" placeholder="Write a summary or notes to export or print..."></textarea>
         <button class="export-btn">Export</button>
       </div>
     </div>

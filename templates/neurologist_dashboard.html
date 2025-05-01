@@ -292,5 +292,18 @@
 
     <a href="{{ url_for('schedule_appointment') }}" class="schedule-btn">+ Schedule Appointment</a>
 
-    
   </div>
+
+  <script>
+    
+    // Automatically fade out flash messages after 3.5 seconds
+    setTimeout(function () {
+      const flashMessages = document.querySelectorAll('.flash');
+      flashMessages.forEach(function (msg) {
+        msg.style.transition = "opacity 0.6s ease";
+        msg.style.opacity = '0';
+        setTimeout(() => msg.remove(), 600); // remove from DOM after fade
+      });
+    }, 3500); // adjust duration as needed
+  </script>
+  

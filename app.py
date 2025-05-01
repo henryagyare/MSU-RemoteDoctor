@@ -48,7 +48,8 @@ class Patient(db.Model):
     radiologist_notes =db.Column(db.String(500))
     nhiss_score = db.Column(db.Integer)
     radiologist_notes = db.Column(db.String(500))
-    neurologist_notes = db.Column(db.String(500))
+    diagnosis = db.Column(db.String(500))
+    treatment = db.Column(db.String(500))
     neuro_approved = db.Column(db.Boolean, default=False)
 
 
@@ -258,14 +259,13 @@ from flask import flash
 @app.route('/patients/<int:patient_id>/update', methods=["POST"])
 def update_patient(patient_id):
     patient = Patient.query.get_or_404(patient_id)
-
-    patient.neurologist_notes = request.form.get("neurologist_notes")
+    patient.diagnosis = request.form.get("diagnosis")
+    patient.treatment = request.form.get("treatment")
     patient.neuro_approved = "neuro_approved" in request.form
-
     db.session.commit()
-
     flash("Patient case approved and notes submitted successfully.", "success")
     return redirect(url_for('neurologist_dashboard'))
+
 
 @app.route('/schedule_appointment', methods=["GET", "POST"])
 def schedule_appointment():

@@ -71,14 +71,21 @@
 
 
 <form action="{{ url_for('update_patient', patient_id=patient.id) }}" method="POST">
-    <h3>Add Neurologist Notes</h3>
+    <h3>Diagnosis</h3>
     
-    <textarea name="neurologist_notes" rows="5" cols="50" placeholder="Write your findings or observations here..." required></textarea><br><br>
-  
+    <textarea name="diagnosis" rows="5">{{ patient.neurologist_notes }}</textarea>
+
+    
+    <h3>Treatment</h3>
+    
+    <textarea name="treatment" rows="5">{{ patient.neurologist_notes }}</textarea>
+
+    
     <label>
-      <input type="checkbox" name="neuro_approved" value="1">
-      Approve this case
-    </label><br><br>
+        <input type="checkbox" name="neuro_approved" {% if patient.neuro_approved %}checked{% endif %}>
+        Approve Patient
+    </label>
+      
   
     <button type="submit">Submit</button>
   </form>
