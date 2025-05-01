@@ -42,7 +42,9 @@
       border-bottom: 1px solid #ecf0f1;
     }
 
-
+    .patient-table tr:last-child {
+      border-bottom: none;
+    }
 
     .badge {
       padding: 6px 10px;
@@ -110,7 +112,7 @@
       .patient-table tr {
         margin-bottom: 15px;
         background: white;
-        box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
         border-radius: 8px;
         overflow: hidden;
       }
@@ -148,7 +150,7 @@
     </tr>
   </thead>
   <tbody>
-    {% for patient in patients%}
+    {% for patient in patients %}
     <tr>
       <td data-label="Full Name">{{ patient.fullname }}</td>
       <td data-label="Age">{{ patient.age }}</td>
