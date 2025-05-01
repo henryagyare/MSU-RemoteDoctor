@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>NIHSS Stroke Scale</title>
   <style>
     body {
@@ -18,7 +19,7 @@
       margin: 0 auto;
       background: white;
       padding: 20px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     }
     table {
       width: 100%;
@@ -45,11 +46,6 @@
     .score-options input[type="radio"] {
       margin-right: 5px;
     }
-    .score-0 { background-color: #e0f2f1; color: #00695c; }
-    .score-1 { background-color: #dcedc8; color: #558b2f; }
-    .score-2 { background-color: #fff9c4; color: #fbc02d; }
-    .score-3 { background-color: #ffe0b2; color: #f57c00; }
-    .score-4 { background-color: #ffcdd2; color: #d32f2f; }
     .submit-btn {
       margin-top: 20px;
       text-align: center;
@@ -195,240 +191,24 @@
     </div>
     <h2 id="scoreOutput" style="text-align:center; color:#00695c;"></h2>
   </form>
-  <head>
-    <meta charset="UTF-8" />
-    <title>NIHSS Stroke Scale</title>
-    <style>
-      body {
-        font-family: Arial, sans-serif;
-        background-color: #f5f7f8;
-        padding: 20px;
-      }
-      h1 {
-        text-align: center;
-        color: #00695c;
-      }
-      form {
-        max-width: 1000px;
-        margin: 0 auto;
-        background: white;
-        padding: 20px;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-      }
-      table {
-        width: 100%;
-        border-collapse: collapse;
-      }
-      th,
-      td {
-        padding: 10px;
-        text-align: left;
-        border-bottom: 1px solid #ccc;
-        vertical-align: top;
-      }
-      th {
-        background-color: #00897b;
-        color: white;
-      }
-      .score-options label {
-        display: inline-block;
-        margin-right: 15px;
-        padding: 5px 10px;
-        border-radius: 15px;
-        background-color: #e0f2f1;
-        cursor: pointer;
-      }
-      .score-options input[type="radio"] {
-        margin-right: 5px;
-      }
-      .score-0 {
-        background-color: #e0f2f1;
-        color: #00695c;
-      }
-      .score-1 {
-        background-color: #dcedc8;
-        color: #558b2f;
-      }
-      .score-2 {
-        background-color: #fff9c4;
-        color: #fbc02d;
-      }
-      .score-3 {
-        background-color: #ffe0b2;
-        color: #f57c00;
-      }
-      .score-4 {
-        background-color: #ffcdd2;
-        color: #d32f2f;
-      }
-      .submit-btn {
-        margin-top: 20px;
-        text-align: center;
-      }
-      .submit-btn button {
-        background-color: #00695c;
-        color: white;
-        padding: 10px 20px;
-        border: none;
-        border-radius: 5px;
-        font-size: 16px;
-        cursor: pointer;
-      }
-    </style>
-  </head>
-  <body>
-    <h1>NIHSS Stroke Scale</h1>
-    <form id="nihssForm">
-      <table>
-        <thead>
-          <tr>
-            <th>Category</th>
-            <th>Options</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>1a. Level of consciousness</td>
-            <td class="score-options">
-              0 Alert <input type="radio" name="loc" value="0" /> 1 Drowsy
-              <input type="radio" name="loc" value="1" /> 2 Stuporous
-              <input type="radio" name="loc" value="2" /> 3 Coma
-              <input type="radio" name="loc" value="3" />
-            </td>
-          </tr>
-          <tr>
-            <td>1b. LOC Questions</td>
-            <td class="score-options">
-              0 Both <input type="radio" name="loc_q" value="0" /> 1 One
-              <input type="radio" name="loc_q" value="1" /> 2 Incorrect
-              <input type="radio" name="loc_q" value="2" />
-            </td>
-          </tr>
-          <tr>
-            <td>1c. LOC Commands</td>
-            <td class="score-options">
-              0 Both <input type="radio" name="loc_cmd" value="0" /> 1 One
-              <input type="radio" name="loc_cmd" value="1" /> 2 Incorrect
-              <input type="radio" name="loc_cmd" value="2" />
-            </td>
-          </tr>
-          <tr>
-            <td>2. Best Gaze</td>
-            <td class="score-options">
-              0 Normal <input type="radio" name="gaze" value="0" /> 1 Partial
-              <input type="radio" name="gaze" value="1" /> 2 Forced deviation
-              <input type="radio" name="gaze" value="2" />
-            </td>
-          </tr>
-          <tr>
-            <td>3. Visual</td>
-            <td class="score-options">
-              0 No loss <input type="radio" name="visual" value="0" /> 1 Partial
-              <input type="radio" name="visual" value="1" /> 2 Complete
-              <input type="radio" name="visual" value="2" /> 3 Bilateral
-              <input type="radio" name="visual" value="3" />
-            </td>
-          </tr>
-          <tr>
-            <td>4. Facial Palsy</td>
-            <td class="score-options">
-              0 Normal <input type="radio" name="facial" value="0" /> 1 Minor
-              <input type="radio" name="facial" value="1" /> 2 Partial
-              <input type="radio" name="facial" value="2" /> 3 Complete
-              <input type="radio" name="facial" value="3" />
-            </td>
-          </tr>
-          <tr>
-            <td>5. Motor Arm</td>
-            <td class="score-options">
-              0 No drift <input type="radio" name="arm" value="0" /> 1 Drift
-              <input type="radio" name="arm" value="1" /> 2 Some effort
-              <input type="radio" name="arm" value="2" /> 3 No effort
-              <input type="radio" name="arm" value="3" /> 4 No movement
-              <input type="radio" name="arm" value="4" />
-            </td>
-          </tr>
-          <tr>
-            <td>6. Motor Leg</td>
-            <td class="score-options">
-              0 No drift <input type="radio" name="leg" value="0" /> 1 Drift
-              <input type="radio" name="leg" value="1" /> 2 Some effort
-              <input type="radio" name="leg" value="2" /> 3 No effort
-              <input type="radio" name="leg" value="3" /> 4 No movement
-              <input type="radio" name="leg" value="4" />
-            </td>
-          </tr>
-          <tr>
-            <td>7. Limb Ataxia</td>
-            <td class="score-options">
-              0 Absent <input type="radio" name="ataxia" value="0" /> 1 Present
-              <input type="radio" name="ataxia" value="1" /> 2 Not testable
-              <input type="radio" name="ataxia" value="2" />
-            </td>
-          </tr>
-          <tr>
-            <td>8. Sensory</td>
-            <td class="score-options">
-              0 Normal <input type="radio" name="sensory" value="0" /> 1 Mild
-              loss <input type="radio" name="sensory" value="1" /> 2
-              Severe/Total <input type="radio" name="sensory" value="2" />
-            </td>
-          </tr>
-          <tr>
-            <td>9. Best Language</td>
-            <td class="score-options">
-              0 No aphasia <input type="radio" name="language" value="0" /> 1
-              Mild <input type="radio" name="language" value="1" /> 2 Severe
-              <input type="radio" name="language" value="2" /> 3 Mute
-              <input type="radio" name="language" value="3" />
-            </td>
-          </tr>
-          <tr>
-            <td>10. Dysarthria</td>
-            <td class="score-options">
-              0 Normal <input type="radio" name="dysarthria" value="0" /> 1 Mild
-              <input type="radio" name="dysarthria" value="1" /> 2 Severe
-              <input type="radio" name="dysarthria" value="2" />
-            </td>
-          </tr>
-          <tr>
-            <td>11. Extinction and Inattention</td>
-            <td class="score-options">
-              0 Normal <input type="radio" name="inattention" value="0" /> 1
-              Partial <input type="radio" name="inattention" value="1" /> 2
-              Profound <input type="radio" name="inattention" value="2" />
-            </td>
-          </tr>
-        </tbody>
-      </table>
-      <div class="submit-btn">
-        
-        <button type="button" onclick="calculateScore()">
-          Calculate NIHSS Score
-        </button>
-      </div>
-      <h2 id="scoreOutput" style="text-align: center; color: #00695c"></h2>
+  <div class="submit-btn">
+    <form action="/confirm_page" method="post">
+      <input type="hidden" name="nhiss_score" id="nhiss_score">
+      <button type="submit">Submit Patient Data</button>
     </form>
-
-    <script>
-      function calculateScore() {
-        const form = document.getElementById("nihssForm");
-        const formData = new FormData(form);
-        let total = 0;
-        for (let [key, value] of formData.entries()) {
-          total += parseInt(value);
-        }
-        document.getElementById("scoreOutput").innerText =
-          "Total NIHSS Score: " + total;
-        document.getElementById("nhiss_score").value = total;
+  </div>
+  <script>
+    function calculateScore() {
+      const form = document.getElementById("nihssForm");
+      const formData = new FormData(form);
+      let total = 0;
+      for (let [key, value] of formData.entries()) {
+        total += parseInt(value);
       }
-    </script>
-
-    <div class="submit-btn">
-      <form action="/confirm_page" method="post">
-        <input type="hidden" name="nhiss_score" id="nhiss_score">
-        <button type="submit">Submit Patient Data</button>
-      </form>
-    </div>
-  </body>
+      document.getElementById("scoreOutput").innerText =
+        "Total NIHSS Score: " + total;
+      document.getElementById("nhiss_score").value = total;
+    }
+  </script>
+</body>
 </html>
