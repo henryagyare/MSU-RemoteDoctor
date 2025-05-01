@@ -6,52 +6,94 @@
   <title>Login</title>
   <style>
     body {
-      font-family: Arial, sans-serif;
+      font-family: 'Poppins', Arial, sans-serif;
       display: flex;
       justify-content: center;
       align-items: center;
       height: 100vh;
-      background-color: #f2f2f2;
+      margin: 0;
+      background: linear-gradient(135deg, #2c3e50, #4ca1af); /* Muted blue gradient */
+      color: #f5f5f5; /* Softer text color */
     }
+
     .login-container {
-      background-color: #fff;
-      padding: 30px 40px;
-      border-radius: 10px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      background-color: #34495e; /* Muted dark blue */
+      padding: 40px 50px;
+      border-radius: 15px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
       width: 100%;
       max-width: 400px;
-    }
-    .login-container h2 {
       text-align: center;
-      margin-bottom: 25px;
     }
+
+    .login-container h2 {
+      font-size: 2rem;
+      margin-bottom: 20px;
+      color: #ecf0f1; /* Light text color */
+    }
+
     .form-group {
-      margin-bottom: 15px;
+      margin-bottom: 20px;
+      text-align: left;
     }
+
     label {
       display: block;
-      margin-bottom: 5px;
+      margin-bottom: 8px;
+      font-weight: bold;
+      color: #bdc3c7; /* Softer label color */
     }
+
     input[type="text"],
     input[type="password"],
     select {
       width: 100%;
-      padding: 10px;
-      border: 1px solid #ccc;
-      border-radius: 5px;
+      padding: 12px;
+      border: 1px solid #7f8c8d; /* Muted border color */
+      border-radius: 8px;
+      font-size: 1rem;
+      box-sizing: border-box;
+      background-color: #2c3e50; /* Darker input background */
+      color: #ecf0f1; /* Light text color */
+      transition: border-color 0.3s ease;
     }
+
+    input[type="text"]:focus,
+    input[type="password"]:focus,
+    select:focus {
+      border-color: #4ca1af; /* Highlighted border color */
+      outline: none;
+    }
+
     button {
       width: 100%;
-      padding: 10px;
-      background-color: #4CAF50;
+      padding: 12px;
+      background: linear-gradient(135deg, #4ca1af, #2c3e50); /* Muted gradient */
       color: white;
       border: none;
-      border-radius: 5px;
-      font-size: 16px;
+      border-radius: 8px;
+      font-size: 1.2rem;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    button:hover {
+      background: linear-gradient(135deg, #2c3e50, #4ca1af); /* Reverse gradient on hover */
+    }
+
+    select {
+      appearance: none;
+      background: #34495e; /* Darker background for dropdown */
       cursor: pointer;
     }
-    button:hover {
-      background-color: #45a049;
+
+    select:focus {
+      outline: none;
+    }
+
+    form {
+      margin-bottom: 10px;
     }
   </style>
 </head>
@@ -59,7 +101,7 @@
   <div class="login-container">
     <h2>Login</h2>
     
-    <form method = 'POST' action = '/login'>
+    <form method='POST' action='/login'>
       <div class="form-group">
         <label for="username">Username:</label>
         <input type="text" id="username" name="username" required>

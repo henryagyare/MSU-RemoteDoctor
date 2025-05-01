@@ -5,94 +5,157 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Reports Dashboard</title>
   <style>
-    * { box-sizing: border-box; }
+    * {
+      box-sizing: border-box;
+    }
+
     body {
       margin: 0;
       font-family: 'Segoe UI', sans-serif;
-      background-color: #f4f4f4;
+      background-color: #f7f9fc; /* Softer light gray background */
+      color: #2c3e50; /* Darker text color for readability */
     }
+
     .container {
       display: flex;
     }
+
     .sidebar {
       width: 220px;
-      background-color: #dddddd;
+      background-color: #34495e; /* Muted dark blue */
       padding: 20px;
       min-height: 100vh;
+      box-shadow: 2px 0 8px rgba(0, 0, 0, 0.1);
     }
+
     .sidebar a {
       display: block;
-      padding: 10px 0;
+      padding: 10px 15px;
       font-weight: bold;
-      color: #000;
+      color: #ecf0f1; /* Light text color */
       text-decoration: none;
+      border-radius: 5px;
+      transition: background-color 0.3s ease;
     }
+
+    .sidebar a:hover,
+    .sidebar a.active {
+      background-color: #4ca1af; /* Highlighted link color */
+      color: #fff;
+    }
+
     .main {
       flex: 1;
       padding: 30px;
-      background-color: #fff;
+      background-color: #ffffff; /* White background for the main content */
+      border-radius: 8px;
+      box-shadow: 0 1px 5px rgba(0, 0, 0, 0.1);
+      margin: 20px;
     }
+
     h1 {
       margin-top: 0;
+      color: #34495e; /* Darker heading color */
     }
+
     .section {
       margin-bottom: 30px;
     }
+
     .overview-container {
       display: flex;
       gap: 20px;
     }
-    .chart-box, .stats-box {
-      background-color: #fafafa;
+
+    .chart-box,
+    .stats-box {
+      background-color: #f8f9fa; /* Light gray background for boxes */
       padding: 20px;
       flex: 1;
-      border-radius: 5px;
-      border: 1px solid #ccc;
+      border-radius: 8px;
+      box-shadow: 0 1px 5px rgba(0, 0, 0, 0.1);
     }
+
     .chart-placeholder {
       height: 180px;
-      background: repeating-linear-gradient(45deg, #f0f0f0, #f0f0f0 10px, #e0e0e0 10px, #e0e0e0 20px);
+      background: repeating-linear-gradient(
+        45deg,
+        #f0f0f0,
+        #f0f0f0 10px,
+        #e0e0e0 10px,
+        #e0e0e0 20px
+      );
       display: flex;
       align-items: center;
       justify-content: center;
-      color: #999;
+      color: #7f8c8d; /* Softer placeholder text color */
       font-style: italic;
+      border-radius: 5px;
     }
+
     table {
       width: 100%;
       border-collapse: collapse;
+      background-color: #ffffff;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 1px 5px rgba(0, 0, 0, 0.1);
     }
-    th, td {
-      border: 1px solid #ccc;
+
+    th,
+    td {
+      border: 1px solid #ddd;
       padding: 10px;
       text-align: left;
     }
+
     th {
-      background-color: #f1f1f1;
+      background-color: #4ca1af; /* Muted blue for table headers */
+      color: white;
+      font-weight: bold;
     }
+
+    tr:nth-child(even) {
+      background-color: #f8f9fa; /* Light gray for alternating rows */
+    }
+
     .export-container {
       display: flex;
       justify-content: space-between;
       align-items: center;
       margin-top: 20px;
     }
+
     .export-container textarea {
       flex: 1;
       padding: 10px;
       border: 1px solid #ccc;
-      border-radius: 5px;
+      border-radius: 8px;
       margin-right: 20px;
+      background-color: #f8f9fa; /* Light gray background */
+      color: #2c3e50;
+      font-family: 'Segoe UI', sans-serif; /* Default font for textarea */
     }
+
+    .export-container textarea::placeholder {
+      font-family: 'Arial', sans-serif; /* Custom font for placeholder */
+      font-style: italic;
+      color: #7f8c8d; /* Softer placeholder color */
+    }
+
     .export-btn {
-      background-color: #007bff;
+      background-color: #4ca1af; /* Muted blue button */
       color: white;
       border: none;
       padding: 10px 20px;
-      border-radius: 5px;
+      border-radius: 8px;
       cursor: pointer;
+      font-weight: bold;
+      transition: background-color 0.3s ease;
     }
+
     .export-btn:hover {
-      background-color: #0056b3;
+      background-color: #0056b3; /* Darker blue on hover */
     }
   </style>
 </head>
