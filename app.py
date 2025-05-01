@@ -6,7 +6,6 @@ from sqlalchemy.types import String
 
 import os
 
-
 app = Flask(__name__)
 
 UPLOAD_FOLDER = "static/uploads"
@@ -26,7 +25,6 @@ class UserAccount(db.Model):
     last_name = db.Column(db.String(80), nullable=False)
     email = db.Column(db.String(120), nullable=False, unique=True)
     role = db.Column(db.String(50), nullable=False)
-  
 
 # Patients Class
 class Patient(db.Model):
@@ -45,13 +43,12 @@ class Patient(db.Model):
     allergies = db.Column(db.String(300))
     stroke_history = db.Column(db.String(500))
     medical_history = db.Column(db.String(500))
-    radiologist_notes =db.Column(db.String(500))
-    nhiss_score = db.Column(db.Integer)
     radiologist_notes = db.Column(db.String(500))
+    nhiss_score = db.Column(db.Integer)
     diagnosis = db.Column(db.String(500))
     treatment = db.Column(db.String(500))
     neuro_approved = db.Column(db.Boolean, default=False)
-
+    ct_scan_filename = db.Column(db.String(255))
 
 #appointment scheduling with neurologists. 
 class Appointment(db.Model):
@@ -64,9 +61,10 @@ class Appointment(db.Model):
 
     patient = db.relationship('Patient', backref='appointments')
 
-
 with app.app_context():
     db.create_all()
+
+# The rest of the code remains unchanged
 
 patient_data_list = [        
         {"id": 1, "fullname": "John Doe", "age": 45, "arrival": "10:30 AM", "heart_rate": 78, "status": "Stable"},
@@ -162,13 +160,12 @@ def confirm_page():
     session['nhiss_score'] = nhiss_score
     return render_template("confirm_page.html", nhiss_score=nhiss_score)
 
-@app.route('/nhiss_score', methods = ["POST"])
+@app.route('/nhiss_score', methods=["POST"])
 def nhiss_score():
-    # Patient Data from the Entry Form
-    nhiss_score_value = session.get('nhiss_score' , 0)
+    nhiss_score_value = session.get('nhiss_score', 0)
     fullname = request.form["fullname"]
     age = request.form["age"]
-    sex =  request.form.get("sex")
+    sex = request.form.get("sex")
     arrival = request.form["arrival"]
     systolic = request.form["systolic"]
     diastolic = request.form["diastolic"]
@@ -181,23 +178,43 @@ def nhiss_score():
     stroke_history = request.form["previous-stroke-event"]
     medical_history = request.form.getlist("medical-history")
     radiologist_notes = request.form["radiologist-notes"]
-    
 
-    upload()
+    # ✅ Save uploaded CT image
+    filename = None
+    if 'CT-scan' in request.files:
+        image = request.files['CT-scan']
+        if image.filename != '':
+            filename = secure_filename(image.filename)
+            image.save(os.path.join(app.config["UPLOAD_FOLDER"], filename))
 
+    # Format history
     if isinstance(medical_history, list):
         medical_history = ', '.join(medical_history)
-
     elif not medical_history:
         medical_history = 'No known Medical history'
 
-    new_patient = Patient(fullname = fullname, age = age, sex = sex, arrival = arrival , 
-                          systolic = systolic, diastolic = diastolic, heart_rate = heart_rate, 
-                          temperature = temperature, oxygen_saturation = oxygen_saturation, glucose = glucose,
-                          current_medications = current_medications, allergies = allergies,stroke_history =stroke_history, 
-                          medical_history = medical_history, radiologist_notes = radiologist_notes, nhiss_score = int(nhiss_score_value))
-    db.session.add(new_patient)       
-    db.session.commit() 
+    # Save to DB
+    new_patient = Patient(
+        fullname=fullname,
+        age=age,
+        sex=sex,
+        arrival=arrival,
+        systolic=systolic,
+        diastolic=diastolic,
+        heart_rate=heart_rate,
+        temperature=temperature,
+        oxygen_saturation=oxygen_saturation,
+        glucose=glucose,
+        current_medications=current_medications,
+        allergies=allergies,
+        stroke_history=stroke_history,
+        medical_history=medical_history,
+        radiologist_notes=radiologist_notes,
+        nhiss_score=int(nhiss_score_value),
+        ct_scan_filename=filename  # ✅ Save file to DB
+    )
+    db.session.add(new_patient)
+    db.session.commit()
 
     return render_template("nhiss_score.html")
 
