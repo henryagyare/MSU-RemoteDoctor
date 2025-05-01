@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Schedule Appointment</title>
+  <style>
+    body { font-family: 'Segoe UI'; padding: 40px; background-color: #f9f9f9; }
+    form { max-width: 500px; margin: auto; background: white; padding: 30px; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+    input, select, textarea { width: 100%; padding: 10px; margin-bottom: 15px; border-radius: 6px; border: 1px solid #ccc; }
+    button { background-color: #3498db; color: white; padding: 10px 20px; border: none; border-radius: 6px; cursor: pointer; }
+  </style>
+</head>
+<body>
+
+<h2 style="text-align: center;">Schedule Appointment</h2>
+
+<form method="POST">
+  <label>Patient:</label>
+  <select name="patient_id" required>
+    {% for patient in patients %}
+    <option value="{{ patient.id }}">{{ patient.fullname }}</option>
+    {% endfor %}
+  </select>
+
+  <label>Date & Time:</label>
+  <input type="datetime-local" name="datetime" required>
+
+  <label>Purpose:</label>
+  <input type="text" name="purpose" required>
+
+  <label>Notes (optional):</label>
+  <textarea name="notes" rows="4"></textarea>
+
+  <button type="submit">Schedule</button>
+</form>
+
+</body>
+</html>

@@ -148,59 +148,86 @@
   <div class="container">
     <div class="sidebar">
       <a href="#" class="active">Dashboard</a>
-      <a href="/patient_list">Patients</a>
+      <a href="{{ url_for('patient_list') }}">View All Patients</a>
+
     </div>
     <div class="main-content">
       <div class="top-bar">
         <h1>DASHBOARD – STROKE TECHNICIAN</h1>
-        <a href="#" class="logout">Log Out</a>
+        <a href="/login" class="logout">Log Out</a>
       </div>
       <form action='/patient_data_entry' method = 'GET'> 
         <button  type='submit' class="button">+ New Patient</button>
       </form> 
-      <form action="/technician_dashboard" method="POST">
-        <input type="search" name="search_patients">
-        <input type="submit">
+      
+      <form method="POST" action="{{ url_for('technician_dashboard') }}" style="display: flex; align-items: center; gap: 10px; margin-top: 20px;">
+        <input type="text" name="search_query" placeholder="Search by name or age..." 
+               style="padding: 10px; border: 1px solid #ccc; border-radius: 5px; font-size: 1rem; flex: 1;" required>
+      
+        <button type="submit" class="button" style="background-color: #4ca1af;">Search</button>
+      
+        <a href="{{ url_for('technician_dashboard') }}" class="button" 
+           style="background-color: #7f8c8d; text-decoration: none; display: inline-block; text-align: center;">
+           Reset
+        </a>
       </form>
+          
+      
 
       <h2>ACTIVE PATIENTS</h2>
-      <table>
-        <thead>
+
+      <!-- <input type="text" id="searchInput" placeholder="Search by name or age..." />
+      <button onclick="searchPatients()">Search</button>
+      <a href="#" onclick="resetTable()">Reset</a> -->
+
+<table>
+  <thead>
+    <tr>
+      <th>Full Name</th>
+      <th>Age</th>
+      <th>Arrival</th>
+    </tr>
+  </thead>
+  <tbody id="patientTable">
+    {% for patient in all_patients %}
+    <tr>
+      <td>{{ patient.fullname }}</td>
+      <td>{{ patient.age }}</td>
+      <td>{{ patient.arrival }}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+<!-- <script>
+  function searchPatients() {
+    const query = document.getElementById("searchInput").value;
+
+    fetch("/search_patients", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({ search_query: query })
+    })
+    .then(response => response.json())
+    .then(data => {
+      const tableBody = document.getElementById("patientTable");
+      tableBody.innerHTML = ""; // clear table
+      data.forEach(patient => {
+        tableBody.innerHTML += `
           <tr>
-            <th>Patient ID</th>
-            <th>Name</th>
-            <th>Status</th>
-            <th>Date of Arrival</th>
+            <td>${patient.fullname}</td>
+            <td>${patient.age}</td>
+            <td>${patient.arrival}</td>
           </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>12345</td>
-            <td>Jane Doe</td>
-            <td>In Progress</td>
-            <td>04/01/2024</td>
-          </tr>
-          <tr>
-            <td>67890</td>
-            <td>John Smith</td>
-            <td>In Progress</td>
-            <td>04/01/2024</td>
-          </tr>
-          <tr>
-            <td>13579</td>
-            <td>Michael Brown</td>
-            <td>In Progress</td>
-            <td>03/31/2024</td>
-          </tr>
-          <tr>
-            <td>24680</td>
-            <td>Emily White</td>
-            <td>In Progress</td>
-            <td>03/30/2024</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-  </div>
-</body>
-</html>
+        `;
+      });
+    });
+  }
+
+  function resetTable() {
+    document.getElementById("searchInput").value = "";
+    location.reload();  // full page reload (or you can fetch all again via AJAX if preferred)
+  }
+</script> -->

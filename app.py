@@ -1,6 +1,9 @@
-from flask import Flask, render_template, request, redirect, url_for, jsonify 
+from flask import Flask, render_template, request, redirect, url_for, jsonify,  session, flash
 from werkzeug.utils import secure_filename
 from flask_sqlalchemy import SQLAlchemy 
+from sqlalchemy import cast
+from sqlalchemy.types import String
+
 import os
 
 
@@ -23,7 +26,7 @@ class UserAccount(db.Model):
     last_name = db.Column(db.String(80), nullable=False)
     email = db.Column(db.String(120), nullable=False, unique=True)
     role = db.Column(db.String(50), nullable=False)
-    status = db.Column(db.String(10), default='pending')  # pending, approved, denied
+  
 
 # Patients Class
 class Patient(db.Model):
@@ -44,7 +47,22 @@ class Patient(db.Model):
     medical_history = db.Column(db.String(500))
     radiologist_notes =db.Column(db.String(500))
     nhiss_score = db.Column(db.Integer)
-    # neuro_approved = db.Column(db.Integer)
+    radiologist_notes = db.Column(db.String(500))
+    neurologist_notes = db.Column(db.String(500))
+    neuro_approved = db.Column(db.Boolean, default=False)
+
+
+#appointment scheduling with neurologists. 
+class Appointment(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    patient_id = db.Column(db.Integer, db.ForeignKey('patient.id'), nullable=False)
+    datetime = db.Column(db.String(100), nullable=False)
+    purpose = db.Column(db.String(300), nullable=False)
+    notes = db.Column(db.String(500))
+    status = db.Column(db.String(50), default='Scheduled')
+
+    patient = db.relationship('Patient', backref='appointments')
+
 
 with app.app_context():
     db.create_all()
@@ -94,24 +112,59 @@ def login():
             return "Invalid Credentials or Role Mismatch!"
 
 
-@app.route('/technician_dashboard', methods=["POST", "GET"])
+@app.route('/technician_dashboard', methods=["GET", "POST"])
 def technician_dashboard():
     if request.method == "POST":
-        search_item = request.form["search_patients"]
-        return f"You searched for {search_item}" # Re-render the technician dashboard page and let the displayed items be the search result.
-    return render_template('technician_dashboard.html')
+        if "reset" in request.form:
+            all_patients = Patient.query.order_by(Patient.id.desc()).all()
+        else:
+            search_query = request.form.get("search_query", "")
+            all_patients = Patient.query.filter(
+                (Patient.fullname.ilike(f"%{search_query}%")) |
+                (cast(Patient.age, db.String).ilike(f"%{search_query}%"))
+            ).order_by(Patient.id.desc()).all()
+    else:
+        all_patients = Patient.query.order_by(Patient.id.desc()).all()
+
+    return render_template('technician_dashboard.html', all_patients=all_patients)
+
 
 @app.route('/neurologist_dashboard')
 def neurologist_dashboard():
-    return render_template('neurologist_dashboard.html')
+    new_patients = Patient.query.count()
+    patients = Patient.query.order_by(Patient.id.desc()).limit(10).all()
+    appointments = Appointment.query.filter_by(status='Scheduled').order_by(Appointment.datetime.asc()).limit(10).all()
+    upcoming_appointments_count = Appointment.query.filter_by(status='Scheduled').count()
+    alerts=0 
+
+    
+
+    return render_template(
+        'neurologist_dashboard.html',
+        new_patients=new_patients,
+        alerts=alerts,
+        patients=patients,
+        appointments = appointments,
+        upcoming_appointments=upcoming_appointments_count,
+    )
+
     
 @app.route('/patient_data_entry')
 def patient_data_entry():
     return render_template("patient_data_entry.html")
 
+app.secret_key = 'asdfghjkl123456789' 
+
+@app.route('/confirm_page', methods=["POST"])
+def confirm_page():
+    nhiss_score = request.form.get("nhiss_score")
+    session['nhiss_score'] = nhiss_score
+    return render_template("confirm_page.html", nhiss_score=nhiss_score)
+
 @app.route('/nhiss_score', methods = ["POST"])
 def nhiss_score():
     # Patient Data from the Entry Form
+    nhiss_score_value = session.get('nhiss_score' , 0)
     fullname = request.form["fullname"]
     age = request.form["age"]
     sex =  request.form.get("sex")
@@ -137,14 +190,13 @@ def nhiss_score():
     elif not medical_history:
         medical_history = 'No known Medical history'
 
-    if request.method == 'POST':
-        new_patient = Patient(fullname = fullname, age = age, sex = sex, arrival = arrival , 
+    new_patient = Patient(fullname = fullname, age = age, sex = sex, arrival = arrival , 
                           systolic = systolic, diastolic = diastolic, heart_rate = heart_rate, 
                           temperature = temperature, oxygen_saturation = oxygen_saturation, glucose = glucose,
                           current_medications = current_medications, allergies = allergies,stroke_history =stroke_history, 
-                          medical_history = medical_history, radiologist_notes = radiologist_notes)
-        db.session.add(new_patient)       
-        db.session.commit() 
+                          medical_history = medical_history, radiologist_notes = radiologist_notes, nhiss_score = int(nhiss_score_value))
+    db.session.add(new_patient)       
+    db.session.commit() 
 
     return render_template("nhiss_score.html")
 
@@ -165,49 +217,18 @@ def upload():
     else:
         print("no Image Selected")
 
-@app.route('/confirm_page', methods=["POST"])
-def confirm_page():
-    if request.method == 'POST':
-        global nhiss_score_calculated
-        nhiss_score_calculated = request.form["nhiss_score"]
-        return render_template("confirm_page.html")
-
-@app.route("/search_patients", methods=["POST"])
-def search_patients():
-    result = []
-
-    if request.method == 'POST':
-        name = request.form.get('name', '').strip()
-        patient_id = request.form.get('patient_id', '').strip()
-
-        query = Patient.query 
-
-        if name:
-             query = query.filter(Patient.fullname.ilike(f'%{name}%'))
-        if patient_id:
-            query = query.filter(Patient.id == patient_id)
-
-        if not name and not patient_id:
-            query = query.order_by(Patient.arrival.desc()).limit(8)
-
-        results = query.order_by(Patient.arrival.desc()).limit(8).all()
-
-        return jsonify([
-        {
-            'id': p.id,
-            'fullname': p.fullname,
-            'arrival': p.arrival.strftime('%Y-%m-%d %H:%M')
-        } for p in results
-        ])
 
 @app.route('/patient_data_display')
 def patient_data_display():
      return render_template('patient_data_display.html', **patient_data)
 
 @app.route('/patient_list')
+
+@app.route('/patient_list')
 def patient_list():
-    patients = patient_data_list
+    patients = Patient.query.order_by(Patient.id.desc()).all()
     return render_template('patient_list.html', patients=patients)
+
 
 @app.route("/create_account", methods=["GET", "POST"])
 def create_account():
@@ -224,6 +245,50 @@ def create_account():
         db.session.commit()
         return "Account request submitted. Approval may take 1–3 business days."
     return render_template("create_account.html")
+
+
+@app.route('/patients/<int:patient_id>')
+def view_patient(patient_id):
+    patient = Patient.query.get_or_404(patient_id)
+    return render_template("view_patient.html", patient=patient)
+
+
+from flask import flash
+
+@app.route('/patients/<int:patient_id>/update', methods=["POST"])
+def update_patient(patient_id):
+    patient = Patient.query.get_or_404(patient_id)
+
+    patient.neurologist_notes = request.form.get("neurologist_notes")
+    patient.neuro_approved = "neuro_approved" in request.form
+
+    db.session.commit()
+
+    flash("Patient case approved and notes submitted successfully.", "success")
+    return redirect(url_for('neurologist_dashboard'))
+
+@app.route('/schedule_appointment', methods=["GET", "POST"])
+def schedule_appointment():
+    if request.method == "POST":
+        patient_id = request.form.get("patient_id")
+        datetime = request.form.get("datetime")
+        purpose = request.form.get("purpose")
+        notes = request.form.get("notes")
+
+        new_appointment = Appointment(
+            patient_id=patient_id,
+            datetime=datetime,
+            purpose=purpose,
+            notes=notes
+        )
+
+        db.session.add(new_appointment)
+        db.session.commit()
+
+        return redirect(url_for('neurologist_dashboard'))
+
+    patients = Patient.query.all()
+    return render_template("schedule_appointment.html", patients=patients)
 
 
 if __name__ == "__main__":

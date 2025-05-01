@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Patient Details</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      padding: 40px;
+      background-color: #f4f6f8;
+    }
+    .card {
+      background: white;
+      padding: 30px;
+      border-radius: 12px;
+      max-width: 600px;
+      margin: auto;
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+    }
+    h2 {
+      margin-bottom: 20px;
+      color: #2c3e50;
+    }
+    .detail {
+      margin-bottom: 10px;
+      font-size: 16px;
+    }
+    .label {
+      font-weight: bold;
+      color: #34495e;
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h2>{{ patient.fullname }}</h2>
+    <div class="detail"><span class="label">Age:</span> {{ patient.age }}</div>
+    <div class="detail"><span class="label">Sex:</span> {{ patient.sex }}</div>
+    <div class="detail"><span class="label">Arrival:</span> {{ patient.arrival }}</div>
+    <div class="detail"><span class="label">NIHSS Score:</span> {{ patient.nhiss_score }}</div>
+    <div class="detail"><span class="label">Heart Rate:</span> {{ patient.heart_rate }}</div>
+    <div class="detail"><span class="label">Oxygen Saturation:</span> {{ patient.oxygen_saturation }}</div>
+    <div class="detail"><span class="label">Glucose:</span> {{ patient.glucose }}</div>
+    <div class="detail"><span class="label">Allergies:</span> {{ patient.allergies }}</div>
+    <div class="detail"><span class="label">Stroke History:</span> {{ patient.stroke_history }}</div>
+    <div class="detail"><span class="label">Medical History:</span> {{ patient.medical_history }}</div>
+    <div class="detail"><span class="label">Radiologist Notes:</span> {{ patient.radiologist_notes }}</div>
+  </div>
+</body>
+</html>
+
+{% if patient.neurologist_notes %}
+  <h3>Neurologist Notes</h3>
+  <p>{{ patient.neurologist_notes }}</p>
+{% endif %}
+
+{% if patient.neuro_approved %}
+  <p style="color: green;"><strong>Status: Approved</strong></p>
+{% else %}
+  <p style="color: red;"><strong>Status: Pending</strong></p>
+{% endif %}
+{% if patient.neurologist_notes %}
+  <h3>Neurologist Notes</h3>
+  <p>{{ patient.neurologist_notes }}</p>
+{% endif %}
+
+{% if patient.neuro_approved %}
+  <p style="color: green;"><strong>Status: Approved</strong></p>
+{% else %}
+  <p style="color: red;"><strong>Status: Pending</strong></p>
+{% endif %}
+
+
+<form action="{{ url_for('update_patient', patient_id=patient.id) }}" method="POST">
+    <h3>Add Neurologist Notes</h3>
+    
+    <textarea name="neurologist_notes" rows="5" cols="50" placeholder="Write your findings or observations here..." required></textarea><br><br>
+  
+    <label>
+      <input type="checkbox" name="neuro_approved" value="1">
+      Approve this case
+    </label><br><br>
+  
+    <button type="submit">Submit</button>
+  </form>
+  

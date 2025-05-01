@@ -158,30 +158,69 @@
       border-bottom: 1px dashed #dfe6e9;
       padding-bottom: 6px;
     }
+
+    .flash.success {
+      background-color: #dff0d8;
+      color: #3c763d;
+      padding: 12px 20px;
+      border-radius: 6px;
+      margin-bottom: 20px;
+      font-weight: bold;
+      border: 1px solid #b2dba1;
+}
+
+  .schedule-btn {
+    display: inline-block;
+    background-color: #0984e3;
+    color: white;
+    padding: 10px 15px;
+    font-size: 16px;
+    font-weight: bold;
+    border: none;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+  }
+
+  .schedule-btn:hover {
+    background-color: #74b9ff;
+}
+
+  
   </style>
 </head>
 <body>
   <div class="container">
     <div class="sidebar">
       <a href="#" class="active">Dashboard</a>
-      <a href="#">Patients</a>
-      <a href="#">Appointments</a>
+      <a href="/patient_list">Patients</a>
       <a href="/patients_report">Reports</a>
     </div>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+          {% for category, message in messages %}
+            <div class="flash {{ category }}">{{ message }}</div>
+          {% endfor %}
+        {% endif %}
+    {% endwith %}
+
     <div class="main-content">
       <div class="header">
         <h1>NEUROLOGIST DASHBOARD</h1>
-        <a href="#" class="logout">Logout</a>
+        <a href="/login" class="logout">Logout</a>
       </div>
 
       <div class="card-group">
         <div class="card">
           <h2>NEW PATIENTS</h2>
-          <p>0</p>
+          <p>{{ new_patients }}</p>
+
         </div>
         <div class="card">
           <h2>UPCOMING APPOINTMENTS</h2>
-          <p>0</p>
+          <p>{{ upcoming_appointments }}</p>
         </div>
         <div class="card">
           <h2>ALERTS</h2>
@@ -190,39 +229,68 @@
       </div>
 
       <div class="section flex-grid">
-        <div class="table-container">
-          <div class="section-title">PATIENT LIST</div>
-          <table>
-            <thead>
-              <tr>
-                <th>Patient</th>
-                <th>Status</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr><td>—</td><td>—</td></tr>
-              <tr><td>—</td><td>—</td></tr>
-            </tbody>
-          </table>
-        </div>
+  <div class="table-container">
+    <div class="section-title">PATIENT LIST</div>
+    <table>
+      <thead>
+        <tr>
+          <th>Full Name</th>
+          <th>Age</th>
+          <th>NIHSS Score</th>
+          <th>Review Status</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for patient in patients %}
+        <tr>
+          <td>{{ patient.fullname }}</td>
+          <td>{{ patient.age }}</td>
+          <td>{{ patient.nhiss_score }}</td>
+          <td>
+            {% if patient.neuro_approved %}
+              <span class="badge stable">Approved</span>
+            {% else %}
+              <span class="badge critical">Pending Review</span>
+            {% endif %}
+          </td>
+          <td>
+            <a href="{{ url_for('view_patient', patient_id=patient.id) }}">
+              <button class="btn-view">View</button>
+            </a>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
 
-        <div class="chart-container">
-          <div class="section-title">APPOINTMENT SCHEDULE</div>
-          <div class="chart-placeholder">[Chart Placeholder]</div>
-        </div>
-      </div>
+    <!-- ✅ Upcoming Appointments Table -->
+    <div class="section-title" style="margin-top: 30px;">UPCOMING APPOINTMENTS</div>
+    <table>
+      <thead>
+        <tr>
+          <th>Patient</th>
+          <th>Date & Time</th>
+          <th>Purpose</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for app in appointments %}
+        <tr>
+          <td>{{ app.patient.fullname }}</td>
+          <td>{{ app.datetime }}</td>
+          <td>{{ app.purpose }}</td>
+        </tr>
+        {% else %}
+        <tr>
+          <td colspan="3">No upcoming appointments scheduled.</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    <!-- End Appointments -->
 
-      <div class="section flex-grid">
-        <div class="message-box">
-          <div class="section-title">MESSAGES</div>
-          <p>No new messages</p>
-        </div>
-        <div class="message-box">
-          <div class="section-title">MESSAGES</div>
-          <p>No new messages</p>
-        </div>
-      </div>
-    </div>
+    <a href="{{ url_for('schedule_appointment') }}" class="schedule-btn">+ Schedule Appointment</a>
+
+    
   </div>
-</body>
-</html>
