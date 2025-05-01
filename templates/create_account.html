@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Create Account</title>
+</head>
+<body>
+    <h2>Create Account</h2>
+    <form method="POST">
+        <label>Username: <input type="text" name="username" required></label><br><br>
+        <label>Password: <input type="password" name="password" required></label><br><br>
+        <label>First Name: <input type="text" name="first_name" required></label><br><br>
+        <label>Last Name: <input type="text" name="last_name" required></label><br><br>
+        <label>Email: <input type="email" name="email" required></label><br><br>
+        <label>Role:
+            <select name="role" required>
+                <option value="">Select role</option>
+                <option value="technician">Technician</option>
+                <option value="neurologist">Neurologist</option>
+                <option value="patient">Patient</option>
+            </select>
+        </label><br><br>
+        <button type="submit">Create Account</button>
+    </form>
+</body>
+</html>

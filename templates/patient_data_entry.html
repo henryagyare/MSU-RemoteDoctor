@@ -155,28 +155,96 @@
 </head>
 <body>
   <h2>Patient Data Entry</h2>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Patient Data Entry</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 30px;
+        background-color: #f9f9f9;
+      }
+      h2 {
+        text-align: center;
+      }
+      form {
+        max-width: 800px;
+        margin: 0 auto;
+        background-color: white;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      }
+      .form-section {
+        margin-bottom: 20px;
+      }
+      .form-section h3 {
+        margin-bottom: 10px;
+      }
+      .form-group {
+        display: flex;
+        margin-bottom: 10px;
+        align-items: center;
+      }
+      .form-group label {
+        width: 200px;
+        margin-right: 10px;
+      }
+      .form-group input,
+      .form-group textarea,
+      .form-group select {
+        flex: 1;
+        padding: 5px;
+      }
+      .checkbox-group {
+        display: flex;
+        gap: 15px;
+        flex-wrap: wrap;
+        margin-bottom: 10px;
+      }
+      .button-group {
+        display: flex;
+        justify-content: center;
+        gap: 20px;
+      }
+      button {
+        padding: 10px 20px;
+        font-size: 16px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+      button:hover {
+        background-color: #ddd;
+      }
+    </style>
+  </head>
+  <body>
+    <h2>Patient Data Entry</h2>
 
-  <form method="post" action="/confirm_page" enctype = 'multipart/form-data'>
-    <div class="form-section">
-      <div class="form-group">
-        <label for="name">Name:</label>
-        <input type="text" id="name" name="fullname">
+    <form method="post" action="/nhiss_score" enctype="multipart/form-data">
+      <div class="form-section">
+        <div class="form-group">
+          <label for="name">Name:</label>
+          <input type="text" id="name" name="fullname" required />
+        </div>
+        <div class="form-group">
+          <label for="age">Age:</label>
+          <input type="number" id="age" name="age" required />
+          <label for="sex">Sex:</label>
+          <select id="sex" name="sex" required >
+            <option value="">Select Sex</option>
+            <option>Male</option>
+            <option>Female</option>
+            <option>Other</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="arrival">Date & Time of Arrival:</label>
+          <input type="datetime-local" id="arrival" name="arrival" required />
+        </div>
       </div>
-      <div class="form-group">
-        <label for="age">Age:</label>
-        <input type="number" id="age" name="age">
-        <label for="sex">Sex:</label>
-        <select id="sex" name="sex">
-          <option>Male</option>
-          <option>Female</option>
-          <option>Other</option>
-        </select>
-      </div>
-      <div class="form-group">
-        <label for="arrival">Date & Time of Arrival:</label>
-        <input type="datetime-local" id="arrival" name="arrival">
-      </div>
-    </div>
 
     <div class="form-section">
       <h3>Vital Signs</h3>
@@ -208,59 +276,109 @@
         <input type="number" id="glucose" name="glucose">
       </div>
     </div>
-
-    <div class="form-section">
-      <h3>Medical History</h3>
-      <div class="checkbox-group">
-        <label><input type="checkbox" name = 'medical-history' value = 'Hypertension'> Hypertension</label>
-        <label><input type="checkbox" name = 'medical-history' value= 'Diabetes'> Diabetes</label>
-        <label><input type="checkbox" name = 'medical-history' value ='Atrial-Fibrillation'> Atrial Fibrillation</label>
-        <label><input type="checkbox" name = 'medical-history' value ='Current-Medications'> Current Medications</label>
-        <label><input type="checkbox" name = 'medical-history' value = 'Family-History-of-stroke '> Family History of Stroke</label>
-      </div>
-      <div class="form-group">
-        <label for="meds">Current Medications:</label>
-        <input type="text" id="meds" name="meds">
-      </div>
-      <div class="form-group">
-        <label for="allergies">Allergies:</label>
-        <input type="text" id="allergies" name="allergies">
-      </div>
-      <div class="form-group">
-        <label for="stroke">Previous Stroke Events:</label>
-        <input type="text" id="stroke" name = 'previous-stroke-event'>
-      </div>
-    </div>
-
-    <!-- The imaging upload data will be handled differently -->
-    <div class="form-section">
-      <h3>Imaging</h3>
-      <div class="form-group">
-        <label for="ct">Upload CT Scan:</label>
-        <input type="file" id="ct" name = 'CT-scan'>
-      </div>
-      <div class="form-group">
-        <label for="imagingTime">Imaging Date & Time:</label>
-        <input type="datetime-local" id="imagingTime" name="imaging-date-time">
-      </div>
-      <div class="form-group">
-        <label for="notes">Radiologist Notes:</label>
-        <textarea id="notes" rows="4" name="radiologist-notes"></textarea>
-      </div>
-    </div>
-    <div class="button-group">
-        
-        <form action = '/patient_data_entry' name = 'nhiss_score' >
-          <a href = '/nhiss_score'> <button type= 'button' = >Calculate Patient's NHISS Score</button></a>
-          <form>
+      <div class="form-section">
+        <h3>Vital Signs</h3>
+        <div class="form-group">
+          <label>Blood Pressure:</label>
+          <input type="text" placeholder="systolic" name="systolic" required /> 
+          <input type="text" placeholder="diastolic" name="diastolic" required />
+          <label for="hr">Heart Rate (Bpm):</label>
+          <input type="number" id="heart-rate" name="heart-rate" required />
+        </div>
+        <div class="form-group">
+          <label for="rr">Respiratory Rate:</label>
+          <input type="number" id="rr" required />
+          <label for="temp">Temperature:</label>
+          <input type="number" id="temp" name="temp" required />
+        </div>
+        <div class="form-group">
+          <label for="spo2">Oxygen Saturation:</label>
+          <input type="number" id="spo2" name="oxygen-saturation" required />
+          <label for="glucose">Blood Glucose Level:</label>
+          <input type="number" id="glucose" name="glucose"/>
+        </div>
       </div>
 
-    <div class="button-group">
-      <button type="button">Save Draft</button>
-      <button type="submit">Submit for Review</button>
-      <button type="reset">Reset Form</button>
-    </div>
+      <div class="form-section">
+        <h3>Medical History</h3>
+        <div class="checkbox-group">
+          <label
+            ><input
+              type="checkbox"
+              name="medical-history"
+              value="Hypertension"
+            />
+            Hypertension</label
+          >
+          <label
+            ><input type="checkbox" name="medical-history" value="Diabetes" />
+            Diabetes</label
+          >
+          <label
+            ><input
+              type="checkbox"
+              name="medical-history"
+              value="Atrial-Fibrillation"
+            />
+            Atrial Fibrillation</label
+          >
+          <label
+            ><input
+              type="checkbox"
+              name="medical-history"
+              value="Current-Medications"
+            />
+            Current Medications</label
+          >
+          <label
+            ><input
+              type="checkbox"
+              name="medical-history"
+              value="Family-History-of-stroke "
+            />
+            Family History of Stroke</label
+          >
+        </div>
+        <div class="form-group">
+          <label for="meds">Current Medications:</label>
+          <input type="text" id="meds" name="meds" />
+        </div>
+        <div class="form-group">
+          <label for="allergies">Allergies:</label>
+          <input type="text" id="allergies" name="allergies" />
+        </div>
+        <div class="form-group">
+          <label for="stroke">Previous Stroke Events:</label>
+          <input type="text" id="stroke" name="previous-stroke-event" />
+        </div>
+      </div>
 
-  </form>
-</body>
+      <!-- The imaging upload data will be handled differently -->
+      <div class="form-section">
+        <h3>Imaging</h3>
+        <div class="form-group">
+          <label for="ct">Upload CT Scan:</label>
+          <input type="file" id="ct" name="CT-scan" />
+        </div>
+        <div class="form-group">
+          <label for="imagingTime">Imaging Date & Time:</label>
+          <input
+            type="datetime-local"
+            id="imagingTime"
+            name="imaging-date-time"
+          />
+        </div>
+        <div class="form-group">
+          <label for="notes">Radiologist Notes:</label>
+          <textarea id="notes" rows="4" name="radiologist-notes"></textarea>
+        </div>
+      </div>
+      <div class="button-group"></div>
+
+      <div class="button-group">
+        <button type="submit">Next</button>
+        <button type="reset">Reset Form</button>
+      </div>
+    </form>
+  </body>
 </html>
