@@ -62,9 +62,7 @@ class Appointment(db.Model):
     patient = db.relationship('Patient', backref='appointments')
 
 with app.app_context():
-    db.create_all()
-
-# The rest of the code remains unchanged
+    db.create_all
 
 patient_data_list = [        
         {"id": 1, "fullname": "John Doe", "age": 45, "arrival": "10:30 AM", "heart_rate": 78, "status": "Stable"},

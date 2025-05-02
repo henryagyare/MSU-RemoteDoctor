@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Patient Data Entry</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
   <style>
     * {
       box-sizing: border-box;
@@ -12,21 +13,44 @@
     body {
       font-family: 'Poppins', Arial, sans-serif;
       margin: 0;
-      padding: 30px;
-      background: linear-gradient(135deg, #8e9eab, #eef2f3); /* Soft gray gradient */
-      color: #2c3e50; /* Softer text color */
+      padding: 0;
+      background: linear-gradient(135deg, #8e9eab, #eef2f3);
+      color: #2c3e50;
+    }
+
+    /* Header Bar */
+    .header-bar {
+      display: flex;
+      align-items: center;
+      padding: 10px 30px;
+      background-color: #ffffff;
+      box-shadow: 0 1px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    .header-bar img {
+      width: 40px;
+      height: 40px;
+      border-radius: 8px;
+      object-fit: cover;
+      margin-right: 10px;
+    }
+
+    .header-bar .brand-name {
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: #2c3e50;
     }
 
     h2 {
       text-align: center;
-      color: #2c3e50; /* Darker heading color */
-      margin-bottom: 20px;
+      color: #2c3e50;
+      margin: 30px 0 20px;
     }
 
     form {
       max-width: 800px;
       margin: 0 auto;
-      background-color: #ffffff; /* White background for the form */
+      background-color: #ffffff;
       padding: 30px;
       border-radius: 15px;
       box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
@@ -38,25 +62,25 @@
 
     .form-section h3 {
       margin-bottom: 15px;
-      color: #34495e; /* Darker section title color */
+      color: #34495e;
       font-weight: bold;
-      border-bottom: 2px solid #74b9ff; /* Softer blue underline */
+      border-bottom: 2px solid #74b9ff;
       padding-bottom: 5px;
     }
 
     .form-group {
       display: flex;
-      flex-wrap: nowrap; /* Ensure items stay on the same line */
+      flex-wrap: nowrap;
       margin-bottom: 15px;
-      align-items: center; /* Align items vertically */
+      align-items: center;
     }
 
     .form-group label {
-      width: 180px; /* Adjusted width for better alignment */
+      width: 180px;
       margin-right: 10px;
       font-weight: bold;
       color: #34495e;
-      text-align: right; /* Align text to the right */
+      text-align: right;
     }
 
     .form-group input,
@@ -67,20 +91,20 @@
       border: 1px solid #ccc;
       border-radius: 8px;
       font-size: 1rem;
-      background-color: #f7f9fa; /* Softer light gray background */
+      background-color: #f7f9fa;
       color: #2c3e50;
     }
 
     .form-group input::placeholder,
     .form-group textarea::placeholder {
       font-style: italic;
-      color: #7f8c8d; /* Softer placeholder color */
+      color: #7f8c8d;
     }
 
     .form-group input:focus,
     .form-group textarea:focus,
     .form-group select:focus {
-      border-color: #74b9ff; /* Softer blue focus color */
+      border-color: #74b9ff;
       outline: none;
     }
 
@@ -91,7 +115,7 @@
     }
 
     .inline-input input {
-      width: 100px; /* Adjusted width for inline inputs */
+      width: 100px;
     }
 
     .checkbox-group {
@@ -102,7 +126,7 @@
     }
 
     .checkbox-group label {
-      background-color: #dfe6e9; /* Light gray background for checkboxes */
+      background-color: #dfe6e9;
       padding: 8px 12px;
       border-radius: 8px;
       cursor: pointer;
@@ -110,7 +134,7 @@
     }
 
     .checkbox-group label:hover {
-      background-color: #b2bec3; /* Slightly darker gray on hover */
+      background-color: #b2bec3;
     }
 
     .button-group {
@@ -126,22 +150,22 @@
       border: none;
       border-radius: 8px;
       cursor: pointer;
-      background-color: #74b9ff; /* Softer blue button */
+      background-color: #74b9ff;
       color: white;
       font-weight: bold;
       transition: background-color 0.3s ease;
     }
 
     button:hover {
-      background-color: #0984e3; /* Slightly darker blue on hover */
+      background-color: #0984e3;
     }
 
     button[type="reset"] {
-      background-color: #e74c3c; /* Red for reset button */
+      background-color: #e74c3c;
     }
 
     button[type="reset"]:hover {
-      background-color: #c0392b; /* Darker red on hover */
+      background-color: #c0392b;
     }
 
     textarea {
@@ -151,10 +175,21 @@
     .form-group input[type="file"] {
       padding: 5px;
     }
+
+    .hidden {
+      display: none;
+    }
   </style>
 </head>
 <body>
+  <!-- Header Bar -->
+  <div class="header-bar">
+    <img src="{{ url_for('static', filename='images/strokesynclogo.png') }}" alt="Logo" />
+    <span class="brand-name">StrokeSync</span>
+  </div>
+
   <h2>Patient Data Entry</h2>
+
   <form method="post" action="/nhiss_score" enctype="multipart/form-data">
     <div class="form-section">
       <div class="form-group">
@@ -173,8 +208,12 @@
         </select>
       </div>
       <div class="form-group">
-        <label for="arrival">Date & Time of Arrival:</label>
+        <label for="arrival">Arrival Date & Time:</label>
         <input type="datetime-local" id="arrival" name="arrival" required />
+      </div>
+      <div class="form-group">
+        <label for="strokeTime">Stroke Onset Time:</label>
+        <input type="datetime-local" id="strokeTime" name="stroke_time" />
       </div>
     </div>
 
@@ -215,11 +254,14 @@
         <label><input type="checkbox" name="medical-history" value="Hypertension" /> Hypertension</label>
         <label><input type="checkbox" name="medical-history" value="Diabetes" /> Diabetes</label>
         <label><input type="checkbox" name="medical-history" value="Atrial-Fibrillation" /> Atrial Fibrillation</label>
-        <label><input type="checkbox" name="medical-history" value="Current-Medications" /> Current Medications</label>
+        <label>
+          <input type="checkbox" id="showMedInput" onclick="toggleMedicationBox()" />
+          Current Medications
+        </label>
         <label><input type="checkbox" name="medical-history" value="Family-History-of-stroke" /> Family History of Stroke</label>
       </div>
-      <div class="form-group">
-        <label for="meds">Chief Complaints:</label>
+      <div class="form-group hidden" id="medication-box">
+        <label for="meds">Current Medications:</label>
         <input type="text" id="meds" name="meds" />
       </div>
       <div class="form-group">
@@ -253,5 +295,12 @@
       <button type="reset">Reset Form</button>
     </div>
   </form>
+
+  <script>
+    function toggleMedicationBox() {
+      const box = document.getElementById('medication-box');
+      box.classList.toggle('hidden');
+    }
+  </script>
 </body>
 </html>
